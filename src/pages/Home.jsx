@@ -49,7 +49,7 @@ const Home = () => {
       setShowScrollTop(window.scrollY > 500)
       setIsWhatsAppVisible(window.scrollY > 200)
     }
-    window.addEventListener('scroll', handleScroll)
+    window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
@@ -72,6 +72,7 @@ const Home = () => {
         key={i} 
         size={14} 
         className={i < rating ? 'text-gold fill-gold' : 'text-gray-300'}
+        aria-hidden="true"
       />
     ))
   }
@@ -109,7 +110,10 @@ const Home = () => {
   return (
     <div className="overflow-hidden">
       {/* ===== HERO SECTION ===== */}
-      <section className="relative min-h-[90vh] md:min-h-screen flex items-center justify-center overflow-hidden">
+      <section 
+        className="relative min-h-[90vh] md:min-h-screen flex items-center justify-center overflow-hidden"
+        aria-label="Hero banner"
+      >
         {/* Background Image */}
         <div 
           className={`absolute inset-0 bg-cover bg-center bg-no-repeat scale-105 transition-opacity duration-1000 ${
@@ -118,8 +122,9 @@ const Home = () => {
           style={{
             backgroundImage: 'url(https://images.pexels.com/photos/9849647/pexels-photo-9849647.jpeg?auto=compress&cs=tinysrgb&w=1200&format=webp)',
           }}
+          aria-hidden="true"
         >
-          <div className="absolute inset-0 bg-dark/50" />
+          <div className="absolute inset-0 bg-dark/50" aria-hidden="true" />
         </div>
 
         {/* Blur Placeholder */}
@@ -132,9 +137,10 @@ const Home = () => {
             filter: 'blur(20px)',
             transform: 'scale(1.1)',
           }}
+          aria-hidden="true"
         />
 
-        <div className="absolute inset-0 bg-gradient-to-t from-dark/80 via-dark/30 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-dark/80 via-dark/30 to-transparent" aria-hidden="true" />
 
         {/* Hero Content */}
         <div className="container mx-auto px-4 py-20 relative z-10">
@@ -145,7 +151,7 @@ const Home = () => {
             className="max-w-4xl mx-auto text-center"
           >
             <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm text-white px-4 py-1.5 rounded-full text-sm font-medium mb-6 border border-white/20">
-              <Sparkles size={16} />
+              <Sparkles size={16} aria-hidden="true" />
               <span>Nigerian Fashion Designer</span>
             </div>
 
@@ -161,23 +167,28 @@ const Home = () => {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
-              <Link to="/gallery" className="btn-primary inline-flex items-center gap-2 justify-center hover:scale-105 transition-transform duration-300">
+              <Link 
+                to="/gallery" 
+                className="btn-primary inline-flex items-center gap-2 justify-center hover:scale-105 transition-transform duration-300 focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2"
+                aria-label="View our gallery of creations"
+              >
                 <span>View Our Work</span>
-                <ArrowRight size={18} />
+                <ArrowRight size={18} aria-hidden="true" />
               </Link>
               <a 
                 href={`https://wa.me/${contactInfo.phone}`}
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="bg-white/20 backdrop-blur-sm text-white border border-white/30 px-8 py-3 rounded-full font-medium hover:bg-white/30 transition-all duration-300 inline-flex items-center gap-2 justify-center hover:scale-105"
+                className="bg-white/20 backdrop-blur-sm text-white border border-white/30 px-8 py-3 rounded-full font-medium hover:bg-white/30 transition-all duration-300 inline-flex items-center gap-2 justify-center hover:scale-105 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2"
+                aria-label="Contact us on WhatsApp"
               >
-                <MessageCircle size={18} />
+                <MessageCircle size={18} aria-hidden="true" />
                 <span>WhatsApp Us</span>
               </a>
             </div>
 
             <p className="text-sm text-white/60 flex items-center justify-center gap-1">
-              <Shield size={14} className="text-gold" />
+              <Shield size={14} className="text-gold" aria-hidden="true" />
               <span>Trusted by 500+ happy clients across Nigeria</span>
             </p>
           </motion.div>
@@ -188,13 +199,14 @@ const Home = () => {
           className="absolute bottom-8 left-1/2 -translate-x-1/2 text-white/40 z-10 hidden md:block"
           animate={{ y: [0, 10, 0] }}
           transition={{ repeat: Infinity, duration: 2 }}
+          aria-hidden="true"
         >
           <ChevronDown size={28} />
         </motion.div>
       </section>
 
       {/* ===== STATS SECTION ===== */}
-      <section ref={statsRef} className="py-12 bg-white border-y border-gold/5">
+      <section ref={statsRef} className="py-12 bg-white border-y border-gold/5" aria-label="Business statistics">
         <motion.div 
           variants={staggerContainer}
           initial="hidden"
@@ -211,7 +223,10 @@ const Home = () => {
               <motion.div 
                 key={index} 
                 variants={statsVariants}
-                className="text-center hover:scale-105 transition-transform duration-300"
+                className="text-center hover:scale-105 transition-transform duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold rounded-lg p-2"
+                tabIndex={0}
+                role="figure"
+                aria-label={`${stat.number} ${stat.label}`}
               >
                 <p className="text-3xl md:text-4xl font-serif text-gold font-bold">{stat.number}</p>
                 <p className="text-sm text-dark/50">{stat.label}</p>
@@ -222,7 +237,7 @@ const Home = () => {
       </section>
 
       {/* ===== FEATURED WORK SECTION ===== */}
-      <section ref={featuredRef} className="py-16 bg-cream">
+      <section ref={featuredRef} className="py-16 bg-cream" aria-label="Featured creations">
         <div className="container mx-auto px-4">
           <motion.div 
             variants={fadeInUp}
@@ -253,7 +268,11 @@ const Home = () => {
                 transition={{ duration: 0.3 }}
                 className="group relative overflow-hidden rounded-xl aspect-square bg-warmBeige"
               >
-                <Link to="/gallery" className="block w-full h-full">
+                <Link 
+                  to="/gallery" 
+                  className="block w-full h-full focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2 rounded-xl"
+                  aria-label={`View ${img.title} in gallery`}
+                >
                   <img 
                     src={img.image} 
                     alt={img.title}
@@ -276,15 +295,19 @@ const Home = () => {
             animate={featuredInView ? "visible" : "hidden"}
             className="text-center mt-8"
           >
-            <Link to="/gallery" className="text-gold font-medium hover:text-terracotta transition-colors inline-flex items-center gap-1 group">
-              View Full Gallery <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform duration-300" />
+            <Link 
+              to="/gallery" 
+              className="text-gold font-medium hover:text-terracotta transition-colors inline-flex items-center gap-1 group focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2 rounded-lg px-2 py-1"
+              aria-label="View full gallery"
+            >
+              View Full Gallery <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform duration-300" aria-hidden="true" />
             </Link>
           </motion.div>
         </div>
       </section>
 
       {/* ===== WHY ADEOLA SECTION ===== */}
-      <section ref={whyRef} className="py-16 bg-white">
+      <section ref={whyRef} className="py-16 bg-white" aria-label="Why choose Adeola">
         <div className="container mx-auto px-4">
           <motion.div 
             variants={fadeInUp}
@@ -314,9 +337,12 @@ const Home = () => {
                 key={index} 
                 variants={fadeInUp}
                 whileHover={{ y: -5, boxShadow: '0 10px 40px rgba(0,0,0,0.08)' }}
-                className="text-center p-6 rounded-xl bg-cream/50 hover:bg-cream transition-all duration-300"
+                className="text-center p-6 rounded-xl bg-cream/50 hover:bg-cream transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold rounded-xl"
+                tabIndex={0}
+                role="article"
+                aria-label={item.title}
               >
-                <div className="w-14 h-14 bg-gold/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-gold/20 transition-colors duration-300">
+                <div className="w-14 h-14 bg-gold/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-gold/20 transition-colors duration-300" aria-hidden="true">
                   <item.icon size={28} className="text-gold" />
                 </div>
                 <h3 className="font-serif text-lg text-dark mb-2">{item.title}</h3>
@@ -328,7 +354,7 @@ const Home = () => {
       </section>
 
       {/* ===== TESTIMONIALS SECTION ===== */}
-      <section ref={testimonialsRef} className="py-16 bg-warmBeige">
+      <section ref={testimonialsRef} className="py-16 bg-warmBeige" aria-label="Client testimonials">
         <div className="container mx-auto px-4">
           <motion.div 
             variants={fadeInUp}
@@ -353,14 +379,17 @@ const Home = () => {
                 key={testimonial.id} 
                 variants={fadeInUp}
                 whileHover={{ y: -5, boxShadow: '0 10px 40px rgba(0,0,0,0.1)' }}
-                className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-300 border border-gold/5"
+                className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-300 border border-gold/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold"
+                tabIndex={0}
+                role="article"
+                aria-label={`Testimonial from ${testimonial.name}`}
               >
-                <div className="flex items-center gap-1 mb-3">
+                <div className="flex items-center gap-1 mb-3" aria-label={`${testimonial.rating} out of 5 stars`}>
                   {renderStars(testimonial.rating)}
                 </div>
                 <p className="text-dark/70 text-sm leading-relaxed italic">"{testimonial.quote.slice(0, 120)}..."</p>
                 <div className="flex items-center gap-3 mt-4 pt-4 border-t border-cream">
-                  <div className="w-10 h-10 rounded-full bg-gold/10 flex items-center justify-center text-gold font-medium">
+                  <div className="w-10 h-10 rounded-full bg-gold/10 flex items-center justify-center text-gold font-medium" aria-hidden="true">
                     {testimonial.initials}
                   </div>
                   <div>
@@ -378,15 +407,19 @@ const Home = () => {
             animate={testimonialsInView ? "visible" : "hidden"}
             className="text-center mt-8"
           >
-            <Link to="/testimonials" className="text-gold font-medium hover:text-terracotta transition-colors inline-flex items-center gap-1 group">
-              Read All Testimonials <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform duration-300" />
+            <Link 
+              to="/testimonials" 
+              className="text-gold font-medium hover:text-terracotta transition-colors inline-flex items-center gap-1 group focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2 rounded-lg px-2 py-1"
+              aria-label="Read all testimonials"
+            >
+              Read All Testimonials <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform duration-300" aria-hidden="true" />
             </Link>
           </motion.div>
         </div>
       </section>
 
       {/* ===== SERVICES QUICK LINKS ===== */}
-      <section ref={servicesRef} className="py-16 bg-white">
+      <section ref={servicesRef} className="py-16 bg-white" aria-label="Our services">
         <div className="container mx-auto px-4">
           <motion.div 
             variants={fadeInUp}
@@ -427,9 +460,10 @@ const Home = () => {
                 >
                   <Link 
                     to="/services"
-                    className="block bg-cream/50 hover:bg-cream rounded-xl p-5 text-center transition-all duration-300 hover:shadow-md border border-transparent hover:border-gold/20"
+                    className="block bg-cream/50 hover:bg-cream rounded-xl p-5 text-center transition-all duration-300 hover:shadow-md border border-transparent hover:border-gold/20 focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2 rounded-xl"
+                    aria-label={`Learn more about ${service.title}`}
                   >
-                    <div className="text-3xl mb-2">{emoji}</div>
+                    <div className="text-3xl mb-2" aria-hidden="true">{emoji}</div>
                     <h4 className="font-serif text-dark font-medium">{service.title}</h4>
                     <p className="text-xs text-gold font-medium mt-1">{service.price}</p>
                   </Link>
@@ -444,15 +478,19 @@ const Home = () => {
             animate={servicesInView ? "visible" : "hidden"}
             className="text-center mt-8"
           >
-            <Link to="/services" className="text-gold font-medium hover:text-terracotta transition-colors inline-flex items-center gap-1 group">
-              View All Services <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform duration-300" />
+            <Link 
+              to="/services" 
+              className="text-gold font-medium hover:text-terracotta transition-colors inline-flex items-center gap-1 group focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2 rounded-lg px-2 py-1"
+              aria-label="View all services"
+            >
+              View All Services <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform duration-300" aria-hidden="true" />
             </Link>
           </motion.div>
         </div>
       </section>
 
       {/* ===== FINAL CTA BANNER ===== */}
-      <section ref={ctaRef} className="py-16 bg-dark">
+      <section ref={ctaRef} className="py-16 bg-dark" aria-label="Call to action">
         <div className="container mx-auto px-4">
           <motion.div 
             variants={fadeInUp}
@@ -472,17 +510,19 @@ const Home = () => {
                 href={`https://wa.me/${contactInfo.phone}`}
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="bg-gold text-white px-8 py-3 rounded-full font-medium hover:bg-terracotta transition-colors inline-flex items-center gap-2 justify-center hover:scale-105 transform transition-all duration-300"
+                className="bg-gold text-white px-8 py-3 rounded-full font-medium hover:bg-terracotta transition-colors inline-flex items-center gap-2 justify-center hover:scale-105 transform transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2 focus:ring-offset-dark"
+                aria-label="Start your journey on WhatsApp"
               >
-                <MessageCircle size={18} />
+                <MessageCircle size={18} aria-hidden="true" />
                 <span>Start Your Journey</span>
               </a>
               <Link 
                 to="/gallery" 
-                className="border-2 border-white/30 text-white px-8 py-3 rounded-full font-medium hover:bg-white/10 transition-colors inline-flex items-center gap-2 justify-center hover:scale-105 transform transition-all duration-300"
+                className="border-2 border-white/30 text-white px-8 py-3 rounded-full font-medium hover:bg-white/10 transition-colors inline-flex items-center gap-2 justify-center hover:scale-105 transform transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-dark"
+                aria-label="View our gallery"
               >
                 <span>View Gallery</span>
-                <ArrowRight size={18} />
+                <ArrowRight size={18} aria-hidden="true" />
               </Link>
             </div>
           </motion.div>
@@ -499,10 +539,10 @@ const Home = () => {
         }}
         transition={{ duration: 0.3 }}
         onClick={scrollToTop}
-        className="fixed bottom-24 right-6 z-50 w-12 h-12 bg-gold text-white rounded-full shadow-lg hover:bg-terracotta transition-colors flex items-center justify-center hover:scale-110 transform transition-all duration-300"
+        className="fixed bottom-24 right-6 z-50 w-12 h-12 bg-gold text-white rounded-full shadow-lg hover:bg-terracotta transition-colors flex items-center justify-center hover:scale-110 transform transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2"
         aria-label="Back to top"
       >
-        <ArrowUp size={20} />
+        <ArrowUp size={20} aria-hidden="true" />
       </motion.button>
 
       {/* ===== FLOATING WHATSAPP BUTTON ===== */}
@@ -517,14 +557,19 @@ const Home = () => {
         href={`https://wa.me/${contactInfo.phone}`}
         target="_blank"
         rel="noopener noreferrer"
-        className="fixed bottom-6 right-6 z-50 w-14 h-14 bg-green-500 rounded-full shadow-lg flex items-center justify-center hover:bg-green-600 transition-colors hover:scale-110 transform transition-all duration-300"
-        aria-label="WhatsApp"
+        className="fixed bottom-6 right-6 z-50 w-14 h-14 bg-green-500 rounded-full shadow-lg flex items-center justify-center hover:bg-green-600 transition-colors hover:scale-110 transform transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+        aria-label="Contact us on WhatsApp"
       >
-        <MessageCircle size={28} className="text-white" />
+        <MessageCircle size={28} className="text-white" aria-hidden="true" />
       </motion.a>
 
       {/* ===== CSS ANIMATIONS ===== */}
       <style>{`
+        /* Smooth scrolling for the whole page */
+        html {
+          scroll-behavior: smooth;
+        }
+
         @keyframes subtleZoom {
           0% { transform: scale(1); }
           100% { transform: scale(1.05); }
@@ -532,7 +577,35 @@ const Home = () => {
         .animate-subtleZoom {
           animation: subtleZoom 20s ease-in-out infinite alternate;
         }
+
+        /* Focus-visible for keyboard navigation */
+        *:focus-visible {
+          outline: 2px solid #C9A84C;
+          outline-offset: 2px;
+        }
+
+        /* Skip to content link (for keyboard users) */
+        .skip-to-content {
+          position: absolute;
+          top: -9999px;
+          left: 50%;
+          transform: translateX(-50%);
+          background: #C9A84C;
+          color: white;
+          padding: 0.5rem 1rem;
+          border-radius: 0 0 0.5rem 0.5rem;
+          z-index: 9999;
+          font-weight: 600;
+        }
+        .skip-to-content:focus {
+          top: 0;
+        }
       `}</style>
+
+      {/* ===== SKIP TO CONTENT LINK ===== */}
+      <a href="#main" className="skip-to-content">
+        Skip to main content
+      </a>
     </div>
   )
 }
