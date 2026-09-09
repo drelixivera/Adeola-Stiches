@@ -1,9 +1,10 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
+import { motion, useInView } from 'framer-motion'
 import { 
   Scissors, Heart, Star, Clock, Award, Users, 
   Shield, Sparkles, MessageCircle, ArrowRight,
-  ChevronDown
+  ChevronDown, ArrowUp
 } from 'lucide-react'
 import { galleryImages } from '../data/galleryData'
 import { testimonialsData } from '../data/testimonialsData'
@@ -11,10 +12,28 @@ import { servicesData } from '../data/servicesData'
 import { contactInfo } from '../data/contactData'
 
 const Home = () => {
-  // State for hero image loading
+  // ===== STATE =====
   const [isHeroLoaded, setIsHeroLoaded] = useState(false)
+  const [showScrollTop, setShowScrollTop] = useState(false)
+  const [isWhatsAppVisible, setIsWhatsAppVisible] = useState(false)
 
-  // Preload the hero image
+  // ===== REFS FOR ANIMATIONS =====
+  const statsRef = useRef(null)
+  const featuredRef = useRef(null)
+  const whyRef = useRef(null)
+  const testimonialsRef = useRef(null)
+  const servicesRef = useRef(null)
+  const ctaRef = useRef(null)
+
+  const statsInView = useInView(statsRef, { once: true, margin: "-100px" })
+  const featuredInView = useInView(featuredRef, { once: true, margin: "-100px" })
+  const whyInView = useInView(whyRef, { once: true, margin: "-100px" })
+  const testimonialsInView = useInView(testimonialsRef, { once: true, margin: "-100px" })
+  const servicesInView = useInView(servicesRef, { once: true, margin: "-100px" })
+  const ctaInView = useInView(ctaRef, { once: true, margin: "-100px" })
+
+  // ===== EFFECTS =====
+  // Preload hero image
   useEffect(() => {
     const img = new Image()
     img.src = 'https://images.pexels.com/photos/9849647/pexels-photo-9849647.jpeg?auto=compress&cs=tinysrgb&w=1200&format=webp'
@@ -24,18 +43,29 @@ const Home = () => {
     return () => clearTimeout(timeout)
   }, [])
 
-  // Get featured gallery images
+  // Scroll handlers
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowScrollTop(window.scrollY > 500)
+      setIsWhatsAppVisible(window.scrollY > 200)
+    }
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  // ===== HANDLERS =====
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  // ===== DATA =====
   const featuredImages = galleryImages.filter(img => img.featured).slice(0, 4)
   const displayImages = featuredImages.length > 0 ? featuredImages : galleryImages.slice(0, 4)
-
-  // Get featured testimonials
   const featuredTestimonials = testimonialsData.slice(0, 3)
-
-  // Get popular services
   const popularServices = servicesData.filter(s => s.popular).slice(0, 4)
   const displayServices = popularServices.length > 0 ? popularServices : servicesData.slice(0, 4)
 
-  // Helper to render stars
+  // ===== HELPER FUNCTIONS =====
   const renderStars = (rating) => {
     return Array(5).fill(0).map((_, i) => (
       <Star 
@@ -46,23 +76,41 @@ const Home = () => {
     ))
   }
 
+  // ===== ANIMATION VARIANTS =====
+  const fadeInUp = {
+    hidden: { opacity: 0, y: 30 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: { duration: 0.6, ease: 'easeOut' }
+    }
+  }
+
+  const staggerContainer = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15,
+        delayChildren: 0.1,
+      }
+    }
+  }
+
+  const statsVariants = {
+    hidden: { opacity: 0, scale: 0.9 },
+    visible: { 
+      opacity: 1, 
+      scale: 1,
+      transition: { duration: 0.5, ease: 'easeOut' }
+    }
+  }
+
   return (
     <div className="overflow-hidden">
-      {/* ===== HERO SECTION WITH OPTIMIZED BACKGROUND ===== */}
+      {/* ===== HERO SECTION ===== */}
       <section className="relative min-h-[90vh] md:min-h-screen flex items-center justify-center overflow-hidden">
-        
-        {/* Blur Placeholder - Shows immediately */}
-        <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-700"
-          style={{
-            backgroundImage: 'url(https://images.pexels.com/photos/9849647/pexels-photo-9849647.jpeg?auto=compress&cs=tinysrgb&w=100)',
-            filter: 'blur(20px)',
-            transform: 'scale(1.1)',
-            opacity: isHeroLoaded ? 0 : 1,
-          }}
-        />
-
-        {/* Main Background Image - Loads in background with WebP */}
+        {/* Background Image */}
         <div 
           className={`absolute inset-0 bg-cover bg-center bg-no-repeat scale-105 transition-opacity duration-1000 ${
             isHeroLoaded ? 'opacity-100 animate-subtleZoom' : 'opacity-0'
@@ -71,38 +119,49 @@ const Home = () => {
             backgroundImage: 'url(https://images.pexels.com/photos/9849647/pexels-photo-9849647.jpeg?auto=compress&cs=tinysrgb&w=1200&format=webp)',
           }}
         >
-          {/* Dark Overlay */}
           <div className="absolute inset-0 bg-dark/50" />
         </div>
 
-        {/* Decorative Gradient Overlay */}
+        {/* Blur Placeholder */}
+        <div 
+          className={`absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-700 ${
+            isHeroLoaded ? 'opacity-0' : 'opacity-100'
+          }`}
+          style={{
+            backgroundImage: 'url(https://images.pexels.com/photos/9849647/pexels-photo-9849647.jpeg?auto=compress&cs=tinysrgb&w=100)',
+            filter: 'blur(20px)',
+            transform: 'scale(1.1)',
+          }}
+        />
+
         <div className="absolute inset-0 bg-gradient-to-t from-dark/80 via-dark/30 to-transparent" />
 
         {/* Hero Content */}
         <div className="container mx-auto px-4 py-20 relative z-10">
-          <div className="max-w-4xl mx-auto text-center">
-            {/* Small badge - Fade in */}
-            <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm text-white px-4 py-1.5 rounded-full text-sm font-medium mb-6 border border-white/20 animate-fadeInUp">
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="max-w-4xl mx-auto text-center"
+          >
+            <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm text-white px-4 py-1.5 rounded-full text-sm font-medium mb-6 border border-white/20">
               <Sparkles size={16} />
               <span>Nigerian Fashion Designer</span>
             </div>
 
-            {/* Main Heading - Fade in with delay */}
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-serif text-white leading-tight mb-4 animate-fadeInUp" style={{ animationDelay: '0.2s' }}>
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-serif text-white leading-tight mb-4">
               Where Every Stitch <br />
               <span className="text-gold">Tells a Story</span>
             </h1>
 
-            {/* Subheading - Fade in with delay */}
-            <p className="text-lg md:text-xl text-white/80 max-w-2xl mx-auto leading-relaxed mb-8 animate-fadeInUp" style={{ animationDelay: '0.4s' }}>
+            <p className="text-lg md:text-xl text-white/80 max-w-2xl mx-auto leading-relaxed mb-8">
               Crafting timeless, custom-made fashion that celebrates the beauty 
               and uniqueness of every individual. From Aso Ebi to bridal wear, 
               Adeola brings your vision to life.
             </p>
 
-            {/* CTA Buttons - Fade in with delay */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8 animate-fadeInUp" style={{ animationDelay: '0.6s' }}>
-              <Link to="/gallery" className="btn-primary inline-flex items-center gap-2 justify-center">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
+              <Link to="/gallery" className="btn-primary inline-flex items-center gap-2 justify-center hover:scale-105 transition-transform duration-300">
                 <span>View Our Work</span>
                 <ArrowRight size={18} />
               </Link>
@@ -110,55 +169,67 @@ const Home = () => {
                 href={`https://wa.me/${contactInfo.phone}`}
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="bg-white/20 backdrop-blur-sm text-white border border-white/30 px-8 py-3 rounded-full font-medium hover:bg-white/30 transition-all duration-300 inline-flex items-center gap-2 justify-center"
+                className="bg-white/20 backdrop-blur-sm text-white border border-white/30 px-8 py-3 rounded-full font-medium hover:bg-white/30 transition-all duration-300 inline-flex items-center gap-2 justify-center hover:scale-105"
               >
                 <MessageCircle size={18} />
                 <span>WhatsApp Us</span>
               </a>
             </div>
 
-            {/* Trust Indicator - Fade in with delay */}
-            <p className="text-sm text-white/60 flex items-center justify-center gap-1 animate-fadeInUp" style={{ animationDelay: '0.8s' }}>
+            <p className="text-sm text-white/60 flex items-center justify-center gap-1">
               <Shield size={14} className="text-gold" />
               <span>Trusted by 500+ happy clients across Nigeria</span>
             </p>
-          </div>
+          </motion.div>
         </div>
 
         {/* Scroll Indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-white/40 animate-bounce z-10 hidden md:block">
+        <motion.div 
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 text-white/40 z-10 hidden md:block"
+          animate={{ y: [0, 10, 0] }}
+          transition={{ repeat: Infinity, duration: 2 }}
+        >
           <ChevronDown size={28} />
-        </div>
+        </motion.div>
       </section>
 
       {/* ===== STATS SECTION ===== */}
-      <section className="py-12 bg-white border-y border-gold/5">
-        <div className="container mx-auto px-4">
+      <section ref={statsRef} className="py-12 bg-white border-y border-gold/5">
+        <motion.div 
+          variants={staggerContainer}
+          initial="hidden"
+          animate={statsInView ? "visible" : "hidden"}
+          className="container mx-auto px-4"
+        >
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
-            <div className="text-center">
-              <p className="text-3xl md:text-4xl font-serif text-gold font-bold">10+</p>
-              <p className="text-sm text-dark/50">Years Experience</p>
-            </div>
-            <div className="text-center">
-              <p className="text-3xl md:text-4xl font-serif text-gold font-bold">500+</p>
-              <p className="text-sm text-dark/50">Happy Clients</p>
-            </div>
-            <div className="text-center">
-              <p className="text-3xl md:text-4xl font-serif text-gold font-bold">100%</p>
-              <p className="text-sm text-dark/50">Custom Made</p>
-            </div>
-            <div className="text-center">
-              <p className="text-3xl md:text-4xl font-serif text-gold font-bold">4.9⭐</p>
-              <p className="text-sm text-dark/50">Average Rating</p>
-            </div>
+            {[
+              { number: '10+', label: 'Years Experience', icon: Clock },
+              { number: '500+', label: 'Happy Clients', icon: Users },
+              { number: '100%', label: 'Custom Made', icon: Scissors },
+              { number: '4.9⭐', label: 'Average Rating', icon: Star },
+            ].map((stat, index) => (
+              <motion.div 
+                key={index} 
+                variants={statsVariants}
+                className="text-center hover:scale-105 transition-transform duration-300"
+              >
+                <p className="text-3xl md:text-4xl font-serif text-gold font-bold">{stat.number}</p>
+                <p className="text-sm text-dark/50">{stat.label}</p>
+              </motion.div>
+            ))}
           </div>
-        </div>
+        </motion.div>
       </section>
 
       {/* ===== FEATURED WORK SECTION ===== */}
-      <section className="py-16 bg-cream">
+      <section ref={featuredRef} className="py-16 bg-cream">
         <div className="container mx-auto px-4">
-          <div className="text-center max-w-2xl mx-auto mb-10">
+          <motion.div 
+            variants={fadeInUp}
+            initial="hidden"
+            animate={featuredInView ? "visible" : "hidden"}
+            className="text-center max-w-2xl mx-auto mb-10"
+          >
             <span className="text-gold font-medium text-sm tracking-wider uppercase">Portfolio</span>
             <h2 className="text-3xl md:text-4xl font-serif text-dark mt-2">
               Featured <span className="text-gold">Creations</span>
@@ -166,97 +237,124 @@ const Home = () => {
             <p className="text-dark/60 mt-2">
               A glimpse into the craftsmanship and attention to detail that defines every piece.
             </p>
-          </div>
+          </motion.div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 max-w-6xl mx-auto">
-            {displayImages.map((img) => (
-              <Link 
+          <motion.div 
+            variants={staggerContainer}
+            initial="hidden"
+            animate={featuredInView ? "visible" : "hidden"}
+            className="grid grid-cols-2 md:grid-cols-4 gap-3 max-w-6xl mx-auto"
+          >
+            {displayImages.map((img, index) => (
+              <motion.div 
                 key={img.id} 
-                to="/gallery"
+                variants={fadeInUp}
+                whileHover={{ scale: 1.03 }}
+                transition={{ duration: 0.3 }}
                 className="group relative overflow-hidden rounded-xl aspect-square bg-warmBeige"
               >
-                <img 
-                  src={img.image} 
-                  alt={img.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  loading="lazy"
-                />
-                <div className="absolute inset-0 bg-dark/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                  <span className="text-white text-sm font-medium px-3 py-1.5 bg-gold/90 rounded-full">
-                    View
-                  </span>
-                </div>
-              </Link>
+                <Link to="/gallery" className="block w-full h-full">
+                  <img 
+                    src={img.image} 
+                    alt={img.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-dark/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                    <span className="text-white text-sm font-medium px-3 py-1.5 bg-gold/90 rounded-full">
+                      View
+                    </span>
+                  </div>
+                </Link>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
 
-          <div className="text-center mt-8">
-            <Link to="/gallery" className="text-gold font-medium hover:text-terracotta transition-colors inline-flex items-center gap-1">
-              View Full Gallery <ArrowRight size={16} />
+          <motion.div 
+            variants={fadeInUp}
+            initial="hidden"
+            animate={featuredInView ? "visible" : "hidden"}
+            className="text-center mt-8"
+          >
+            <Link to="/gallery" className="text-gold font-medium hover:text-terracotta transition-colors inline-flex items-center gap-1 group">
+              View Full Gallery <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform duration-300" />
             </Link>
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* ===== WHY ADEOLA SECTION ===== */}
-      <section className="py-16 bg-white">
+      <section ref={whyRef} className="py-16 bg-white">
         <div className="container mx-auto px-4">
-          <div className="text-center max-w-2xl mx-auto mb-10">
+          <motion.div 
+            variants={fadeInUp}
+            initial="hidden"
+            animate={whyInView ? "visible" : "hidden"}
+            className="text-center max-w-2xl mx-auto mb-10"
+          >
             <span className="text-gold font-medium text-sm tracking-wider uppercase">Why Choose Adeola</span>
             <h2 className="text-3xl md:text-4xl font-serif text-dark mt-2">
               Craftsmanship You <span className="text-gold">Can Trust</span>
             </h2>
-          </div>
+          </motion.div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
-            <div className="text-center p-6 rounded-xl bg-cream/50 hover:bg-cream transition-colors">
-              <div className="w-14 h-14 bg-gold/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Scissors size={28} className="text-gold" />
-              </div>
-              <h3 className="font-serif text-lg text-dark mb-2">Expert Craftsmanship</h3>
-              <p className="text-sm text-dark/60">Over a decade of experience perfecting the art of fashion design.</p>
-            </div>
-
-            <div className="text-center p-6 rounded-xl bg-cream/50 hover:bg-cream transition-colors">
-              <div className="w-14 h-14 bg-gold/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Heart size={28} className="text-gold" />
-              </div>
-              <h3 className="font-serif text-lg text-dark mb-2">Personalized Service</h3>
-              <p className="text-sm text-dark/60">Every piece is designed specifically for you, with your vision in mind.</p>
-            </div>
-
-            <div className="text-center p-6 rounded-xl bg-cream/50 hover:bg-cream transition-colors">
-              <div className="w-14 h-14 bg-gold/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Award size={28} className="text-gold" />
-              </div>
-              <h3 className="font-serif text-lg text-dark mb-2">Quality Guarantee</h3>
-              <p className="text-sm text-dark/60">Premium fabrics and meticulous attention to every detail.</p>
-            </div>
-
-            <div className="text-center p-6 rounded-xl bg-cream/50 hover:bg-cream transition-colors">
-              <div className="w-14 h-14 bg-gold/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Clock size={28} className="text-gold" />
-              </div>
-              <h3 className="font-serif text-lg text-dark mb-2">Timely Delivery</h3>
-              <p className="text-sm text-dark/60">Respecting deadlines without compromising on quality.</p>
-            </div>
-          </div>
+          <motion.div 
+            variants={staggerContainer}
+            initial="hidden"
+            animate={whyInView ? "visible" : "hidden"}
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto"
+          >
+            {[
+              { icon: Scissors, title: 'Expert Craftsmanship', desc: 'Over a decade of experience perfecting the art of fashion design.' },
+              { icon: Heart, title: 'Personalized Service', desc: 'Every piece is designed specifically for you, with your vision in mind.' },
+              { icon: Award, title: 'Quality Guarantee', desc: 'Premium fabrics and meticulous attention to every detail.' },
+              { icon: Clock, title: 'Timely Delivery', desc: 'Respecting deadlines without compromising on quality.' },
+            ].map((item, index) => (
+              <motion.div 
+                key={index} 
+                variants={fadeInUp}
+                whileHover={{ y: -5, boxShadow: '0 10px 40px rgba(0,0,0,0.08)' }}
+                className="text-center p-6 rounded-xl bg-cream/50 hover:bg-cream transition-all duration-300"
+              >
+                <div className="w-14 h-14 bg-gold/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-gold/20 transition-colors duration-300">
+                  <item.icon size={28} className="text-gold" />
+                </div>
+                <h3 className="font-serif text-lg text-dark mb-2">{item.title}</h3>
+                <p className="text-sm text-dark/60">{item.desc}</p>
+              </motion.div>
+            ))}
+          </motion.div>
         </div>
       </section>
 
       {/* ===== TESTIMONIALS SECTION ===== */}
-      <section className="py-16 bg-warmBeige">
+      <section ref={testimonialsRef} className="py-16 bg-warmBeige">
         <div className="container mx-auto px-4">
-          <div className="text-center max-w-2xl mx-auto mb-10">
+          <motion.div 
+            variants={fadeInUp}
+            initial="hidden"
+            animate={testimonialsInView ? "visible" : "hidden"}
+            className="text-center max-w-2xl mx-auto mb-10"
+          >
             <span className="text-gold font-medium text-sm tracking-wider uppercase">Testimonials</span>
             <h2 className="text-3xl md:text-4xl font-serif text-dark mt-2">
               What Our <span className="text-gold">Clients Say</span>
             </h2>
-          </div>
+          </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-            {featuredTestimonials.map((testimonial) => (
-              <div key={testimonial.id} className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow border border-gold/5">
+          <motion.div 
+            variants={staggerContainer}
+            initial="hidden"
+            animate={testimonialsInView ? "visible" : "hidden"}
+            className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto"
+          >
+            {featuredTestimonials.map((testimonial, index) => (
+              <motion.div 
+                key={testimonial.id} 
+                variants={fadeInUp}
+                whileHover={{ y: -5, boxShadow: '0 10px 40px rgba(0,0,0,0.1)' }}
+                className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-300 border border-gold/5"
+              >
                 <div className="flex items-center gap-1 mb-3">
                   {renderStars(testimonial.rating)}
                 </div>
@@ -270,30 +368,45 @@ const Home = () => {
                     <p className="text-xs text-dark/50">{testimonial.location}</p>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
 
-          <div className="text-center mt-8">
-            <Link to="/testimonials" className="text-gold font-medium hover:text-terracotta transition-colors inline-flex items-center gap-1">
-              Read All Testimonials <ArrowRight size={16} />
+          <motion.div 
+            variants={fadeInUp}
+            initial="hidden"
+            animate={testimonialsInView ? "visible" : "hidden"}
+            className="text-center mt-8"
+          >
+            <Link to="/testimonials" className="text-gold font-medium hover:text-terracotta transition-colors inline-flex items-center gap-1 group">
+              Read All Testimonials <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform duration-300" />
             </Link>
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* ===== SERVICES QUICK LINKS ===== */}
-      <section className="py-16 bg-white">
+      <section ref={servicesRef} className="py-16 bg-white">
         <div className="container mx-auto px-4">
-          <div className="text-center max-w-2xl mx-auto mb-10">
+          <motion.div 
+            variants={fadeInUp}
+            initial="hidden"
+            animate={servicesInView ? "visible" : "hidden"}
+            className="text-center max-w-2xl mx-auto mb-10"
+          >
             <span className="text-gold font-medium text-sm tracking-wider uppercase">Services</span>
             <h2 className="text-3xl md:text-4xl font-serif text-dark mt-2">
               What <span className="text-gold">She Offers</span>
             </h2>
-          </div>
+          </motion.div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-6xl mx-auto">
-            {displayServices.map((service) => {
+          <motion.div 
+            variants={staggerContainer}
+            initial="hidden"
+            animate={servicesInView ? "visible" : "hidden"}
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-6xl mx-auto"
+          >
+            {displayServices.map((service, index) => {
               const iconMap = {
                 'Scissors': '✂️',
                 'Sparkles': '✨',
@@ -307,31 +420,46 @@ const Home = () => {
               const emoji = iconMap[service.icon] || '👗'
               
               return (
-                <Link 
+                <motion.div 
                   key={service.id} 
-                  to="/services"
-                  className="bg-cream/50 hover:bg-cream rounded-xl p-5 text-center transition-all duration-300 hover:shadow-md border border-transparent hover:border-gold/20"
+                  variants={fadeInUp}
+                  whileHover={{ y: -5, boxShadow: '0 10px 40px rgba(0,0,0,0.08)' }}
                 >
-                  <div className="text-3xl mb-2">{emoji}</div>
-                  <h4 className="font-serif text-dark font-medium">{service.title}</h4>
-                  <p className="text-xs text-gold font-medium mt-1">{service.price}</p>
-                </Link>
+                  <Link 
+                    to="/services"
+                    className="block bg-cream/50 hover:bg-cream rounded-xl p-5 text-center transition-all duration-300 hover:shadow-md border border-transparent hover:border-gold/20"
+                  >
+                    <div className="text-3xl mb-2">{emoji}</div>
+                    <h4 className="font-serif text-dark font-medium">{service.title}</h4>
+                    <p className="text-xs text-gold font-medium mt-1">{service.price}</p>
+                  </Link>
+                </motion.div>
               )
             })}
-          </div>
+          </motion.div>
 
-          <div className="text-center mt-8">
-            <Link to="/services" className="text-gold font-medium hover:text-terracotta transition-colors inline-flex items-center gap-1">
-              View All Services <ArrowRight size={16} />
+          <motion.div 
+            variants={fadeInUp}
+            initial="hidden"
+            animate={servicesInView ? "visible" : "hidden"}
+            className="text-center mt-8"
+          >
+            <Link to="/services" className="text-gold font-medium hover:text-terracotta transition-colors inline-flex items-center gap-1 group">
+              View All Services <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform duration-300" />
             </Link>
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* ===== FINAL CTA BANNER ===== */}
-      <section className="py-16 bg-dark">
+      <section ref={ctaRef} className="py-16 bg-dark">
         <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center text-white">
+          <motion.div 
+            variants={fadeInUp}
+            initial="hidden"
+            animate={ctaInView ? "visible" : "hidden"}
+            className="max-w-4xl mx-auto text-center text-white"
+          >
             <h2 className="text-3xl md:text-4xl font-serif mb-4">
               Ready to Create Something <span className="text-gold">Beautiful?</span>
             </h2>
@@ -344,22 +472,56 @@ const Home = () => {
                 href={`https://wa.me/${contactInfo.phone}`}
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="bg-gold text-white px-8 py-3 rounded-full font-medium hover:bg-terracotta transition-colors inline-flex items-center gap-2 justify-center"
+                className="bg-gold text-white px-8 py-3 rounded-full font-medium hover:bg-terracotta transition-colors inline-flex items-center gap-2 justify-center hover:scale-105 transform transition-all duration-300"
               >
                 <MessageCircle size={18} />
                 <span>Start Your Journey</span>
               </a>
               <Link 
                 to="/gallery" 
-                className="border-2 border-white/30 text-white px-8 py-3 rounded-full font-medium hover:bg-white/10 transition-colors inline-flex items-center gap-2 justify-center"
+                className="border-2 border-white/30 text-white px-8 py-3 rounded-full font-medium hover:bg-white/10 transition-colors inline-flex items-center gap-2 justify-center hover:scale-105 transform transition-all duration-300"
               >
                 <span>View Gallery</span>
                 <ArrowRight size={18} />
               </Link>
             </div>
-          </div>
+          </motion.div>
         </div>
       </section>
+
+      {/* ===== BACK TO TOP BUTTON ===== */}
+      <motion.button
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ 
+          opacity: showScrollTop ? 1 : 0, 
+          scale: showScrollTop ? 1 : 0.8,
+          pointerEvents: showScrollTop ? 'auto' : 'none'
+        }}
+        transition={{ duration: 0.3 }}
+        onClick={scrollToTop}
+        className="fixed bottom-24 right-6 z-50 w-12 h-12 bg-gold text-white rounded-full shadow-lg hover:bg-terracotta transition-colors flex items-center justify-center hover:scale-110 transform transition-all duration-300"
+        aria-label="Back to top"
+      >
+        <ArrowUp size={20} />
+      </motion.button>
+
+      {/* ===== FLOATING WHATSAPP BUTTON ===== */}
+      <motion.a
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ 
+          opacity: isWhatsAppVisible ? 1 : 0, 
+          scale: isWhatsAppVisible ? 1 : 0.8,
+          pointerEvents: isWhatsAppVisible ? 'auto' : 'none'
+        }}
+        transition={{ duration: 0.3 }}
+        href={`https://wa.me/${contactInfo.phone}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="fixed bottom-6 right-6 z-50 w-14 h-14 bg-green-500 rounded-full shadow-lg flex items-center justify-center hover:bg-green-600 transition-colors hover:scale-110 transform transition-all duration-300"
+        aria-label="WhatsApp"
+      >
+        <MessageCircle size={28} className="text-white" />
+      </motion.a>
 
       {/* ===== CSS ANIMATIONS ===== */}
       <style>{`
@@ -369,27 +531,6 @@ const Home = () => {
         }
         .animate-subtleZoom {
           animation: subtleZoom 20s ease-in-out infinite alternate;
-        }
-        @keyframes fadeInUp {
-          from {
-            opacity: 0;
-            transform: translateY(30px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        .animate-fadeInUp {
-          opacity: 0;
-          animation: fadeInUp 0.8s ease-out forwards;
-        }
-        @keyframes bounce {
-          0%, 100% { transform: translate(-50%, 0); }
-          50% { transform: translate(-50%, 10px); }
-        }
-        .animate-bounce {
-          animation: bounce 2s ease-in-out infinite;
         }
       `}</style>
     </div>
