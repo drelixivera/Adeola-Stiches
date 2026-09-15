@@ -60,6 +60,9 @@ const MeasurementOrderModal = ({ isOpen, onClose, initialService = '' }) => {
     { label: 'Bespoke Custom Dress', icon: '👗' },
     { label: 'Native / Agbada Set', icon: '👑' },
     { label: 'Everyday Casual Chic', icon: '🧵' },
+    { label: "Children's Fashion", icon: '🧒' },        
+    { label: 'Alterations & Repairs', icon: '🔄' },
+    { label: 'Apprenticeship / Learning', icon: '🎓' },
   ]
 
   const fabricOptions = [

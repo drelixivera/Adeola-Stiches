@@ -171,11 +171,7 @@ const Footer = () => {
         {/* Bottom Copyright Bar */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-cream/60">
           <p>© {currentYear} Adeola Fashion Designer. All rights reserved.</p>
-          <div className="flex items-center gap-1">
-            <span>Crafted with</span>
-            <Heart size={13} className="text-red-400 fill-red-400 inline" />
-            <span>by Daniel</span>
-          </div>
+          
           <div className="flex gap-4 text-xs">
             <Link to="/contact" className="hover:text-gold transition-colors">Privacy & Inquiries</Link>
             <span>•</span>

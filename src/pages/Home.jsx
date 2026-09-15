@@ -11,10 +11,15 @@ import { galleryImages } from '../data/galleryData'
 import { testimonialsData } from '../data/testimonialsData'
 import { servicesData } from '../data/servicesData'
 import { contactInfo } from '../data/contactData'
+import { useModal } from '../context/ModalContext'
+import ProcessTimeline from '../components/common/ProcessTimeline'
 
 const Home = () => {
   // ===== STATE =====
   const [isHeroLoaded, setIsHeroLoaded] = useState(false)
+
+  // ===== MODAL =====
+  const { openOrderModal } = useModal()
 
   // ===== REFS FOR ANIMATIONS =====
   const statsRef = useRef(null)
@@ -337,6 +342,9 @@ useEffect(() => {
         </div>
       </section>
 
+      {/* ===== BESPOKE JOURNEY TIMELINE ===== */}
+      <ProcessTimeline onOpenOrderModal={() => openOrderModal()} />
+        
       {/* ===== TESTIMONIALS SECTION ===== */}
       <section ref={testimonialsRef} className="py-16 bg-warmBeige" aria-label="Client testimonials">
         <div className="container mx-auto px-4">
@@ -490,16 +498,15 @@ useEffect(() => {
               Adeola will guide you every step of the way.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a 
-                href={`https://wa.me/${contactInfo.phone}`}
-                target="_blank" 
-                rel="noopener noreferrer"
+             <button
+                type="button"
+                onClick={() => openOrderModal()}
                 className="bg-gold text-white px-8 py-3 rounded-full font-medium hover:bg-terracotta transition-colors inline-flex items-center gap-2 justify-center hover:scale-105 transform transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2 focus:ring-offset-dark"
-                aria-label="Start your journey on WhatsApp"
+                aria-label="Start your custom order"
               >
-                <MessageCircle size={18} aria-hidden="true" />
-                <span>Start Your Journey</span>
-              </a>
+                <Scissors size={18} aria-hidden="true" />
+                <span>Start Custom Order</span>
+              </button>
               <Link 
                 to="/gallery" 
                 className="border-2 border-white/30 text-white px-8 py-3 rounded-full font-medium hover:bg-white/10 transition-colors inline-flex items-center gap-2 justify-center hover:scale-105 transform transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-dark"

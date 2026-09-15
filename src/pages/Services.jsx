@@ -8,6 +8,9 @@ import {
   ChevronDown, ChevronUp
 } from 'lucide-react'
 import { contactInfo } from '../data/contactData'
+import { useModal } from '../context/ModalContext'
+import ProcessTimeline from '../components/common/ProcessTimeline'
+import FAQAccordion from '../components/common/FAQAccordion'
 
 // Map icon names to components
 const iconMap = {
@@ -21,8 +24,21 @@ const iconMap = {
   GraduationCap: GraduationCap,
 }
 
+// Maps service card titles → matching option in MeasurementOrderModal's Step 1
+const SERVICE_TO_GARMENT = {
+  'Custom Tailoring': 'Bespoke Custom Dress',
+  'Aso Ebi & Traditional Wear': 'Aso Ebi & Traditional',
+  'Bridal Collection': 'Bridal Couture',
+  'Corporate & Office Wear': 'Corporate & Office Suit',
+  'Casual & Everyday Wear': 'Everyday Casual Chic',
+  "Children's Fashion": "Children's Fashion",
+  'Alterations & Repairs': 'Alterations & Repairs',
+  'Apprenticeship Program': 'Apprenticeship / Learning',
+}
+
 const Services = () => {
   const [expandedService, setExpandedService] = useState(null)
+  const { openOrderModal } = useModal()
 
   // Get unique categories for filtering
   const categories = ['All', ...new Set(servicesData.map(s => s.category))]
@@ -152,15 +168,14 @@ const Services = () => {
 
                   {/* Action Buttons */}
                   <div className="flex flex-wrap gap-3 mt-4">
-                    <a
-                      href={`https://wa.me/${contactInfo.phone}?text=Hello%20Adeola!%20I'm%20interested%20in%20your%20"${service.title}"%20service.%20Can%20you%20tell%20me%20more?`}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                    <button
+                      type="button"
+                      onClick={() => openOrderModal(SERVICE_TO_GARMENT[service.title] || service.title)}
                       className="flex items-center gap-2 bg-gold text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-terracotta transition-colors"
                     >
                       <MessageCircle size={16} />
                       <span>Request Quote</span>
-                    </a>
+                    </button>
                     <a
                       href={`https://wa.me/${contactInfo.phone}`}
                       target="_blank"
@@ -190,6 +205,12 @@ const Services = () => {
           </button>
         </div>
       )}
+
+      {/* Bespoke Journey Timeline */}
+      <ProcessTimeline onOpenOrderModal={() => openOrderModal()} />
+
+      {/* FAQ Accordion */}
+      <FAQAccordion />
 
       {/* Call to Action */}
       <div className="max-w-4xl mx-auto mt-20 bg-warmBeige rounded-2xl p-8 md:p-12 text-center border border-gold/10">

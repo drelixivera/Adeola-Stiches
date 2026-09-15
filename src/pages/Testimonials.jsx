@@ -1,12 +1,16 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Star, Quote, ChevronLeft, ChevronRight } from 'lucide-react'
+import { Star, Quote, ChevronLeft, ChevronRight, Sparkles } from 'lucide-react'
 import { testimonialsData } from '../data/testimonialsData'
+import ReviewModal from '../components/common/ReviewModal'
 
 const Testimonials = () => {
   // State for carousel on mobile
   const [currentIndex, setCurrentIndex] = useState(0)
   const [showAll, setShowAll] = useState(false)
+
+  // State for review modal
+  const [isReviewModalOpen, setIsReviewModalOpen] = useState(false)
 
   // Get unique services for filtering
   const services = ['All', ...new Set(testimonialsData.map(t => t.service))]
@@ -199,6 +203,37 @@ const Testimonials = () => {
         </div>
       )}
 
+      {/* Share Your Experience Section */}
+      <div className="max-w-3xl mx-auto mt-20">
+        <div className="bg-gradient-to-br from-gold/10 via-cream to-gold/5 rounded-2xl p-8 md:p-10 text-center border border-gold/20">
+          <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-gold/15 text-gold mb-4">
+            <Sparkles size={26} />
+          </div>
+
+          <h2 className="text-2xl md:text-3xl font-serif text-dark mb-3">
+            Loved Your Outfit?
+          </h2>
+
+          <p className="text-dark/60 text-sm md:text-base max-w-lg mx-auto mb-6 leading-relaxed">
+            Your words mean the world to us — and help other clients find their 
+            perfect fit. Share your experience with Adeola in 60 seconds.
+          </p>
+
+          <button
+            type="button"
+            onClick={() => setIsReviewModalOpen(true)}
+            className="btn-primary inline-flex items-center justify-center gap-2 shadow-md hover:shadow-lg"
+          >
+            <Star size={18} className="fill-current" />
+            <span>Share Your Experience</span>
+          </button>
+
+          <p className="text-xs text-dark/40 mt-4">
+            Sent directly to Adeola via WhatsApp — she reads every single one.
+          </p>
+        </div>
+      </div>
+
       {/* Call to Action */}
       <div className="max-w-4xl mx-auto mt-20 bg-warmBeige rounded-2xl p-8 md:p-12 text-center border border-gold/10">
         <h2 className="text-2xl md:text-3xl font-serif text-dark mb-3">
@@ -223,6 +258,12 @@ const Testimonials = () => {
           </Link>
         </div>
       </div>
+
+      {/* Review Modal */}
+      <ReviewModal
+        isOpen={isReviewModalOpen}
+        onClose={() => setIsReviewModalOpen(false)}
+      />
     </div>
   )
 }
