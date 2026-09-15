@@ -44,7 +44,7 @@ export const galleryImages = [
     description: 'Vibrant Aso Ebi designs for special occasions. Made with premium Ankara fabric and detailed hand-stitching.',
     image: traditional1,
     tags: ['Ankara', 'Wedding', 'Vibrant'],
-    featured: false,
+    featured: true,
     date: '2024-12-15',
   },
   {
@@ -121,7 +121,7 @@ export const galleryImages = [
     description: 'Majestic Agbada designs for the modern Nigerian man. Crafted with premium fabrics.',
     image: traditional8,
     tags: ['Agbada', 'Men', 'Royal'],
-    featured: false,
+    featured: true,
     date: '2024-06-01',
   },
 
@@ -202,7 +202,7 @@ export const galleryImages = [
     description: 'Sharp tailored suit with structured shoulders and a perfect fit. Made for the confident professional.',
     image: corporate1,
     tags: ['Suit', 'Corporate', 'Professional'],
-    featured: false,
+    featured: true,
     date: '2024-10-10',
   },
   {
