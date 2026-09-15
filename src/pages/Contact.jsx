@@ -5,6 +5,7 @@ import {
   MessageCircle, Send, CheckCircle2, ArrowRight
 } from 'lucide-react'
 import { contactInfo } from '../data/contactData'
+import FAQAccordion from '../components/common/FAQAccordion'
 
 // Lucide React doesn't have Instagram/Facebook as default exports
 // We'll create simple SVG icons or use the ones that exist
@@ -291,6 +292,9 @@ const Contact = () => {
             </div>
           </div>
         </div>
+        <br />
+        {/* FAQ Section */}
+        <FAQAccordion />
 
         {/* Call to Action Banner */}
         <div className="mt-16 bg-dark rounded-2xl p-8 md:p-12 text-center text-white">
@@ -321,6 +325,7 @@ const Contact = () => {
           </div>
         </div>
       </div>
+      
     </div>
   )
 }
