@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { Star, Quote, ChevronLeft, ChevronRight } from 'lucide-react'
 import { testimonialsData } from '../data/testimonialsData'
 
@@ -208,18 +209,18 @@ const Testimonials = () => {
           beautiful for you.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <a
-            href="/contact"
-            className="btn-primary inline-flex items-center gap-2"
+          <Link
+            to="/contact"
+            className="btn-primary inline-flex items-center justify-center gap-2"
           >
             <span>Get Started</span>
-          </a>
-          <a
-            href="/gallery"
-            className="btn-outline"
+          </Link>
+          <Link
+            to="/gallery"
+            className="btn-outline inline-flex items-center justify-center"
           >
             View Our Work
-          </a>
+          </Link>
         </div>
       </div>
     </div>

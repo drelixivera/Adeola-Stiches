@@ -9,9 +9,13 @@ import Testimonials from './pages/Testimonials'
 import Apprenticeship from './pages/Apprenticeship'
 import SearchResults from './pages/SearchResults'
 
+import ScrollToTop from './components/common/ScrollToTop'
+import NotFound from './pages/NotFound'
+
 function App() {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Layout>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -22,6 +26,7 @@ function App() {
           <Route path="/testimonials" element={<Testimonials />} />
           <Route path="/apprenticeship" element={<Apprenticeship />} />
           <Route path="/search" element={<SearchResults />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </Layout>
     </BrowserRouter>

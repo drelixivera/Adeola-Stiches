@@ -9,8 +9,8 @@ export const contactInfo = {
     sunday: 'Sunday: Closed'
   },
   social: {
-    instagram: 'https://instagram.com/YOUR_MOM_HANDLE',
-    facebook: 'https://facebook.com/YOUR_MOM_HANDLE',
+    instagram: 'https://instagram.com/adeolafashion_',
+    facebook: 'https://facebook.com/adeolafashionng',
     whatsapp: 'https://wa.me/+2349035602214',
   }
 }

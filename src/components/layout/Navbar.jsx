@@ -62,12 +62,12 @@ const Navbar = () => {
           </div>
 
           {/* Desktop Navigation - Hidden on mobile */}
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden md:flex items-center gap-3 lg:gap-5 xl:gap-7">
             {navLinks.map((link) => (
               <Link
                 key={link.path}
                 to={link.path}
-                className={`text-sm font-medium transition-colors hover:text-gold relative group ${
+                className={`text-xs lg:text-sm font-medium transition-colors hover:text-gold relative group ${
                   location.pathname === link.path 
                     ? 'text-gold' 
                     : 'text-dark/70'

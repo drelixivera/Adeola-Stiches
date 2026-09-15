@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { 
   Phone, Mail, MapPin, Clock, 
   MessageCircle, Send, CheckCircle2, ArrowRight
@@ -310,13 +311,13 @@ const Contact = () => {
               <MessageCircle size={18} />
               <span>Start Your Journey</span>
             </a>
-            <a
-              href="/gallery"
+            <Link
+              to="/gallery"
               className="inline-flex items-center gap-2 border-2 border-white/20 text-white px-6 py-3 rounded-full font-medium hover:bg-white/10 transition-colors"
             >
               <span>View Gallery</span>
               <ArrowRight size={18} />
-            </a>
+            </Link>
           </div>
         </div>
       </div>

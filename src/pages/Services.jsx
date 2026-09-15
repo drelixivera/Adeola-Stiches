@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { servicesData } from '../data/servicesData'
 import { 
   Scissors, Sparkles, Heart, Briefcase, 
@@ -136,7 +137,7 @@ const Services = () => {
 
               {/* Features - Visible when expanded on mobile, always on desktop */}
               <div className={`px-6 pb-6 transition-all duration-300 ${
-                isExpanded || window.innerWidth >= 768 ? 'block' : 'hidden'
+                isExpanded ? 'block' : 'hidden md:block'
               }`}>
                 <div className="border-t border-cream pt-4">
                   <h4 className="text-sm font-medium text-dark mb-3">What's Included:</h4>
@@ -209,12 +210,12 @@ const Services = () => {
             <MessageCircle size={18} />
             <span>Chat on WhatsApp</span>
           </a>
-          <a
-            href="/gallery"
-            className="btn-outline"
+          <Link
+            to="/gallery"
+            className="btn-outline inline-flex items-center justify-center"
           >
             View Our Work
-          </a>
+          </Link>
         </div>
       </div>
     </div>

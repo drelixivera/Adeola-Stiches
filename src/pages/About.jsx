@@ -51,10 +51,8 @@ const About = () => {
             look and feel extraordinary.
           </p>
           
-          <Link to="/contact">
-            <button className="btn-primary">
-              Start Your Custom Order
-            </button>
+          <Link to="/contact" className="btn-primary inline-flex items-center justify-center">
+            Start Your Custom Order
           </Link>
         </div>
       </div>
@@ -122,10 +120,8 @@ const About = () => {
           Let's create something beautiful together.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Link to="/contact">
-            <button className="btn-primary">
-              Get Started
-            </button>
+          <Link to="/contact" className="btn-primary inline-flex items-center justify-center">
+            Get Started
           </Link>
           <a 
             href={`https://wa.me/${contactInfo.phone}`}

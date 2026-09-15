@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E5C77A"/>
+      <stop offset="50%" stop-color="#C9A84C"/>
+      <stop offset="100%" stop-color="#9A7822"/>
+    </linearGradient>
+    <linearGradient id="terracottaGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E28E75"/>
+      <stop offset="100%" stop-color="#D4765A"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Background Circle with subtle border -->
+  <circle cx="32" cy="32" r="30" fill="#2C2C2C"/>
+  <circle cx="32" cy="32" r="28" fill="none" stroke="url(#goldGrad)" stroke-width="1.5" opacity="0.8"/>
+  
+  <!-- Elegant Scissors / Tailoring Monogram Motif -->
+  <!-- Left Scissor Blade -->
+  <path d="M22 45 C20 45, 18 43, 18 40 C18 36, 22 34, 25 31 L38 18 C39 17, 41 17, 42 18 C43 19, 43 21, 42 22 L29 35 C27 37, 25 40, 25 42 C25 44, 24 45, 22 45 Z" fill="url(#goldGrad)"/>
+  <circle cx="21" cy="41" r="2.5" fill="#2C2C2C"/>
+  
+  <!-- Right Scissor Blade -->
+  <path d="M42 45 C44 45, 46 43, 46 40 C46 36, 42 34, 39 31 L26 18 C25 17, 23 17, 22 18 C21 19, 21 21, 22 22 L35 35 C37 37, 39 40, 39 42 C39 44, 40 45, 42 45 Z" fill="url(#goldGrad)"/>
+  <circle cx="43" cy="41" r="2.5" fill="#2C2C2C"/>
+  
+  <!-- Center Pivot Screw (Terracotta Accent) -->
+  <circle cx="32" cy="27" r="2.5" fill="url(#terracottaGrad)"/>
+  <circle cx="32" cy="27" r="1" fill="#FFFFFF"/>
+</svg>

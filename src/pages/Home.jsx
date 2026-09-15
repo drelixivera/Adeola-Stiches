@@ -4,7 +4,7 @@ import { motion, useInView } from 'framer-motion'
 import { 
   Scissors, Heart, Star, Clock, Award, Users, 
   Shield, Sparkles, MessageCircle, ArrowRight,
-  ChevronDown, ArrowUp
+  ChevronDown
 } from 'lucide-react'
 import { galleryImages } from '../data/galleryData'
 import { testimonialsData } from '../data/testimonialsData'
@@ -14,8 +14,6 @@ import { contactInfo } from '../data/contactData'
 const Home = () => {
   // ===== STATE =====
   const [isHeroLoaded, setIsHeroLoaded] = useState(false)
-  const [showScrollTop, setShowScrollTop] = useState(false)
-  const [isWhatsAppVisible, setIsWhatsAppVisible] = useState(false)
 
   // ===== REFS FOR ANIMATIONS =====
   const statsRef = useRef(null)
@@ -42,21 +40,6 @@ const Home = () => {
     const timeout = setTimeout(() => setIsHeroLoaded(true), 3000)
     return () => clearTimeout(timeout)
   }, [])
-
-  // Scroll handlers
-  useEffect(() => {
-    const handleScroll = () => {
-      setShowScrollTop(window.scrollY > 500)
-      setIsWhatsAppVisible(window.scrollY > 200)
-    }
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
-
-  // ===== HANDLERS =====
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-  }
 
   // ===== DATA =====
   const featuredImages = galleryImages.filter(img => img.featured).slice(0, 4)
@@ -528,40 +511,6 @@ const Home = () => {
           </motion.div>
         </div>
       </section>
-
-      {/* ===== BACK TO TOP BUTTON ===== */}
-      <motion.button
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ 
-          opacity: showScrollTop ? 1 : 0, 
-          scale: showScrollTop ? 1 : 0.8,
-          pointerEvents: showScrollTop ? 'auto' : 'none'
-        }}
-        transition={{ duration: 0.3 }}
-        onClick={scrollToTop}
-        className="fixed bottom-24 right-6 z-50 w-12 h-12 bg-gold text-white rounded-full shadow-lg hover:bg-terracotta transition-colors flex items-center justify-center hover:scale-110 transform transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2"
-        aria-label="Back to top"
-      >
-        <ArrowUp size={20} aria-hidden="true" />
-      </motion.button>
-
-      {/* ===== FLOATING WHATSAPP BUTTON ===== */}
-      <motion.a
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ 
-          opacity: isWhatsAppVisible ? 1 : 0, 
-          scale: isWhatsAppVisible ? 1 : 0.8,
-          pointerEvents: isWhatsAppVisible ? 'auto' : 'none'
-        }}
-        transition={{ duration: 0.3 }}
-        href={`https://wa.me/${contactInfo.phone}`}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="fixed bottom-6 right-6 z-50 w-14 h-14 bg-green-500 rounded-full shadow-lg flex items-center justify-center hover:bg-green-600 transition-colors hover:scale-110 transform transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
-        aria-label="Contact us on WhatsApp"
-      >
-        <MessageCircle size={28} className="text-white" aria-hidden="true" />
-      </motion.a>
 
       {/* ===== CSS ANIMATIONS ===== */}
       <style>{`

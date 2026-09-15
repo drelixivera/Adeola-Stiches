@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect, useRef } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { useSearchParams, Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { galleryImages } from '../data/galleryData'
 import Lightbox from 'yet-another-react-lightbox'
@@ -8,7 +8,7 @@ import { Zoom, Thumbnails, Share, Fullscreen } from 'yet-another-react-lightbox/
 import { 
   Filter, ChevronDown, Sparkles, MessageCircle, 
   Plus, Loader2, Image as ImageIcon, Tag, 
-  ArrowUp, Grid3x3, LayoutGrid, Heart,
+  Grid3x3, LayoutGrid, Heart,
   X, ChevronLeft, ChevronRight
 } from 'lucide-react'
 import { contactInfo } from '../data/contactData'
@@ -23,7 +23,6 @@ const Gallery = () => {
   const [activeCategory, setActiveCategory] = useState('All')
   const [sortBy, setSortBy] = useState('newest')
   const [showFilters, setShowFilters] = useState(false)
-  const [showScrollTop, setShowScrollTop] = useState(false)
 
   // Pagination
   const [visibleCount, setVisibleCount] = useState(12)
@@ -141,23 +140,10 @@ const Gallery = () => {
     }, 600)
   }
 
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-  }
-
   // Reset pagination when filters change
   useEffect(() => {
     setVisibleCount(ITEMS_PER_PAGE)
   }, [activeCategory, sortBy, searchQuery])
-
-  // Handle scroll events
-  useEffect(() => {
-    const handleScroll = () => {
-      setShowScrollTop(window.scrollY > 500)
-    }
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
 
   // Animation variants
   const containerVariants = {
@@ -515,31 +501,6 @@ const Gallery = () => {
         }}
       />
 
-      {/* ===== SCROLL TO TOP BUTTON ===== */}
-      <AnimatePresence>
-        {showScrollTop && (
-          <motion.button
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.8 }}
-            onClick={scrollToTop}
-            className="fixed bottom-24 right-6 z-50 w-12 h-12 bg-gold text-white rounded-full shadow-lg hover:bg-terracotta transition-colors flex items-center justify-center"
-          >
-            <ArrowUp size={20} />
-          </motion.button>
-        )}
-      </AnimatePresence>
-
-      {/* ===== WHATSAPP FLOATING BUTTON ===== */}
-      <a
-        href={`https://wa.me/${contactInfo.phone}`}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="fixed bottom-6 right-6 z-50 w-14 h-14 bg-gold rounded-full shadow-lg flex items-center justify-center hover:bg-terracotta transition-colors"
-      >
-        <MessageCircle size={28} className="text-white" />
-      </a>
-
       {/* ===== CALL TO ACTION ===== */}
       <section className="py-16 bg-dark mt-8">
         <div className="container mx-auto px-4">
@@ -561,12 +522,12 @@ const Gallery = () => {
                 <MessageCircle size={18} />
                 <span>Start Your Journey</span>
               </a>
-              <a 
-                href="/services" 
+              <Link 
+                to="/services" 
                 className="border-2 border-white/30 text-white px-8 py-3 rounded-full font-medium hover:bg-white/10 transition-colors inline-flex items-center gap-2 justify-center"
               >
                 <span>View Services</span>
-              </a>
+              </Link>
             </div>
           </div>
         </div>
