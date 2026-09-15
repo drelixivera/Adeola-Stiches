@@ -134,7 +134,7 @@ export const galleryImages = [
     description: 'Custom bridal gown with intricate lace detailing and a dramatic train. Designed for the modern Nigerian bride.',
     image: bridal1,
     tags: ['Lace', 'Bridal', 'Elegant'],
-    featured: false,
+    featured: true,
     date: '2024-11-20',
   },
   {

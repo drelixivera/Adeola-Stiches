@@ -1,3 +1,4 @@
+import bridal1 from '../assets/images/bridal1.jpg'
 import { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { motion, useInView } from 'framer-motion'
@@ -31,15 +32,17 @@ const Home = () => {
   const ctaInView = useInView(ctaRef, { once: true, margin: "-100px" })
 
   // ===== EFFECTS =====
-  // Preload hero image
-  useEffect(() => {
-    const img = new Image()
-    img.src = 'https://images.pexels.com/photos/9849647/pexels-photo-9849647.jpeg?auto=compress&cs=tinysrgb&w=1200&format=webp'
-    img.onload = () => setIsHeroLoaded(true)
-    img.onerror = () => setIsHeroLoaded(true)
-    const timeout = setTimeout(() => setIsHeroLoaded(true), 3000)
-    return () => clearTimeout(timeout)
-  }, [])
+  // ===== HERO IMAGE (local, from gallery data) =====
+const heroImage = bridal1
+
+useEffect(() => {
+  const img = new Image()
+  img.src = heroImage
+  img.onload = () => setIsHeroLoaded(true)
+  img.onerror = () => setIsHeroLoaded(true)
+  const timeout = setTimeout(() => setIsHeroLoaded(true), 3000)
+  return () => clearTimeout(timeout)
+}, [heroImage])
 
   // ===== DATA =====
   const featuredImages = galleryImages.filter(img => img.featured).slice(0, 4)
@@ -102,9 +105,7 @@ const Home = () => {
           className={`absolute inset-0 bg-cover bg-center bg-no-repeat scale-105 transition-opacity duration-1000 ${
             isHeroLoaded ? 'opacity-100 animate-subtleZoom' : 'opacity-0'
           }`}
-          style={{
-            backgroundImage: 'url(https://images.pexels.com/photos/9849647/pexels-photo-9849647.jpeg?auto=compress&cs=tinysrgb&w=1200&format=webp)',
-          }}
+          style={{ backgroundImage: `url(${heroImage})` }}
           aria-hidden="true"
         >
           <div className="absolute inset-0 bg-dark/50" aria-hidden="true" />
@@ -116,7 +117,7 @@ const Home = () => {
             isHeroLoaded ? 'opacity-0' : 'opacity-100'
           }`}
           style={{
-            backgroundImage: 'url(https://images.pexels.com/photos/9849647/pexels-photo-9849647.jpeg?auto=compress&cs=tinysrgb&w=100)',
+            backgroundImage: `url(${heroImage})`,
             filter: 'blur(20px)',
             transform: 'scale(1.1)',
           }}

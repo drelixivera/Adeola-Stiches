@@ -3,9 +3,12 @@ import { ArrowUp } from 'lucide-react'
 import Navbar from './Navbar'
 import Footer from './Footer'
 import WhatsAppButton from '../common/WhatsAppButton'
+import MeasurementOrderModal from '../common/MeasurementOrderModal'
+import { useModal } from '../../context/ModalContext'
 
 const Layout = ({ children }) => {
   const [showScrollTop, setShowScrollTop] = useState(false)
+  const { isOrderModalOpen, closeOrderModal, selectedService } = useModal()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -34,6 +37,13 @@ const Layout = ({ children }) => {
 
       {/* Global Interactive WhatsApp Button with Quick Replies */}
       <WhatsAppButton />
+
+      {/* Global Interactive Measurement & Custom Order Modal */}
+      <MeasurementOrderModal
+        isOpen={isOrderModalOpen}
+        onClose={closeOrderModal}
+        initialService={selectedService}
+      />
 
       {/* Global Scroll-to-Top Button */}
       <button

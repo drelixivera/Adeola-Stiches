@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { Menu, X, Phone, Search, XCircle } from 'lucide-react'
+import { Menu, X, Phone, Search, XCircle, Sparkles } from 'lucide-react'
 import { navLinks } from '../../data/navLinks'
 import { contactInfo } from '../../data/contactData'
+import { useModal } from '../../context/ModalContext'
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -10,6 +11,7 @@ const Navbar = () => {
   const [searchQuery, setSearchQuery] = useState('')
   const location = useLocation()
   const navigate = useNavigate()
+  const { openOrderModal } = useModal()
 
   const toggleMenu = () => setIsOpen(!isOpen)
   const closeMenu = () => setIsOpen(false)
@@ -90,14 +92,24 @@ const Navbar = () => {
               <Search size={20} />
             </button>
 
+            {/* Custom Order Trigger - Desktop */}
+            <button
+              type="button"
+              onClick={() => openOrderModal()}
+              className="hidden lg:flex items-center gap-1.5 border border-gold/70 text-gold hover:bg-gold hover:text-white px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all shadow-sm"
+            >
+              <Sparkles size={13} />
+              <span>Custom Order</span>
+            </button>
+
             {/* WhatsApp CTA - Desktop */}
             <a 
               href={`https://wa.me/${contactInfo.phone}`} 
               target="_blank" 
               rel="noopener noreferrer"
-              className="flex items-center gap-2 bg-gold text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-terracotta transition-colors"
+              className="flex items-center gap-1.5 bg-gold text-white px-3.5 py-1.5 lg:px-4 lg:py-2 rounded-full text-xs lg:text-sm font-medium hover:bg-terracotta transition-colors shadow-sm"
             >
-              <Phone size={16} />
+              <Phone size={14} />
               <span>WhatsApp</span>
             </a>
           </div>
@@ -137,14 +149,26 @@ const Navbar = () => {
                 </Link>
               ))}
               
+              <button
+                type="button"
+                onClick={() => {
+                  closeMenu()
+                  openOrderModal()
+                }}
+                className="flex items-center justify-center gap-2 border-2 border-gold text-gold hover:bg-gold hover:text-white px-6 py-2.5 rounded-full text-center text-sm font-semibold transition-colors mt-2"
+              >
+                <Sparkles size={16} />
+                <span>Custom Order &amp; Measurements</span>
+              </button>
+
               <a 
                 href={`https://wa.me/${contactInfo.phone}`}
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 bg-gold text-white px-6 py-3 rounded-full text-center font-medium hover:bg-terracotta transition-colors mt-2"
+                className="flex items-center justify-center gap-2 bg-gold text-white px-6 py-2.5 rounded-full text-center text-sm font-medium hover:bg-terracotta transition-colors"
                 onClick={closeMenu}
               >
-                <Phone size={18} />
+                <Phone size={16} />
                 <span>Contact on WhatsApp</span>
               </a>
             </div>

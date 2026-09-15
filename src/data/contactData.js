@@ -1,6 +1,10 @@
 export const contactInfo = {
-  phone: '+2349035602214',
+  // WhatsApp-ready (no +, no spaces) — used in wa.me/ links
+  phone: '2349035602214',
+  // Display version — for UI
   phoneDisplay: '+234 903 560 2214',
+  // Dial-ready (with +) — for tel: links
+  phoneRaw: '+2349035602214',
   email: 'adeolafashion@gmail.com',
   location: 'Oyo State, Ibadan',
   workingHours: {
@@ -11,6 +15,6 @@ export const contactInfo = {
   social: {
     instagram: 'https://instagram.com/adeolafashion_',
     facebook: 'https://facebook.com/adeolafashionng',
-    whatsapp: 'https://wa.me/+2349035602214',
+    whatsapp: 'https://wa.me/2349035602214',
   }
 }
