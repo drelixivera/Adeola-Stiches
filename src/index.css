@@ -20,6 +20,17 @@
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-serif);
   }
+
+  /* Restore pointer cursor on interactive elements (Tailwind v4 removed default) */
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]),
+  a[href] {
+    cursor: pointer;
+  }
+
+  button:disabled {
+    cursor: not-allowed;
+  }
 }
 
 @layer components {
