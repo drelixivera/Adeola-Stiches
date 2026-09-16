@@ -89,6 +89,9 @@ export const searchContent = (query) => {
   }
   
   const searchTerm = query.toLowerCase().trim()
+  // Escape regex special characters so search terms like "a.b" or "O'Neil" don't break
+  const escapedTerm = searchTerm.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+  const searchRegex = new RegExp(escapedTerm, 'g')
   
   return searchIndex
     .map(item => {
@@ -106,7 +109,7 @@ export const searchContent = (query) => {
       }
       
       // Content matches
-      const contentMatches = content.match(new RegExp(searchTerm, 'g')) || []
+      const contentMatches = content.match(searchRegex) || []
       score += contentMatches.length * 2
       
       // Category matches

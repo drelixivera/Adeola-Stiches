@@ -33,23 +33,53 @@ const MeasurementOrderModal = ({ isOpen, onClose, initialService = '' }) => {
     specialNotes: '',
   })
 
-  useEffect(() => {
-    if (initialService) {
-      setFormData(prev => ({ ...prev, garmentType: initialService }))
-    }
-  }, [initialService])
+  // Reset form when modal opens
+useEffect(() => {
+  if (isOpen) {
+    setStep(1)
+    setShowTips(false)
+    setFormData({
+      garmentType: initialService || 'Aso Ebi & Traditional Wear',
+      fabricStatus: 'I have my own fabric',
+      fabricDetails: '',
+      measurementType: 'custom',
+      standardSize: 'M (UK 12 / US 8)',
+      bust: '',
+      waist: '',
+      hips: '',
+      shoulder: '',
+      sleeve: '',
+      length: '',
+      clientName: '',
+      clientPhone: '',
+      clientLocation: 'Ibadan',
+      eventDate: '',
+      specialNotes: '',
+    })
+  }
+}, [isOpen, initialService])
 
-  // Prevent background scrolling when modal is open
-  useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden'
-    } else {
-      document.body.style.overflow = 'unset'
-    }
-    return () => {
-      document.body.style.overflow = 'unset'
-    }
-  }, [isOpen])
+// Prevent background scrolling when modal is open
+useEffect(() => {
+  if (isOpen) {
+    document.body.style.overflow = 'hidden'
+  } else {
+    document.body.style.overflow = 'unset'
+  }
+  return () => {
+    document.body.style.overflow = 'unset'
+  }
+}, [isOpen])
+
+// Close on Escape key
+useEffect(() => {
+  if (!isOpen) return
+  const handleKeyDown = (e) => {
+    if (e.key === 'Escape') onClose()
+  }
+  document.addEventListener('keydown', handleKeyDown)
+  return () => document.removeEventListener('keydown', handleKeyDown)
+}, [isOpen, onClose])
 
   if (!isOpen) return null
 

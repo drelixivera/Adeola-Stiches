@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { X, Star, Heart, MessageCircle, Sparkles } from 'lucide-react'
 import { contactInfo } from '../../data/contactData'
 
@@ -10,7 +10,42 @@ const ReviewModal = ({ isOpen, onClose }) => {
   const [service, setService] = useState('Aso Ebi Collection')
   const [quote, setQuote] = useState('')
 
-  if (!isOpen) return null
+// Reset form when modal opens
+useEffect(() => {
+  if (isOpen) {
+    setRating(5)
+    setHoverRating(0)
+    setName('')
+    setLocation('')
+    setService('Aso Ebi Collection')
+    setQuote('')
+  }
+}, [isOpen])
+
+// Prevent background scrolling when modal is open
+useEffect(() => {
+  if (isOpen) {
+    document.body.style.overflow = 'hidden'
+  } else {
+    document.body.style.overflow = 'unset'
+  }
+  return () => {
+    document.body.style.overflow = 'unset'
+  }
+}, [isOpen])
+
+// Close on Escape key
+useEffect(() => {
+  if (!isOpen) return
+  const handleKeyDown = (e) => {
+    if (e.key === 'Escape') onClose()
+  }
+  document.addEventListener('keydown', handleKeyDown)
+  return () => document.removeEventListener('keydown', handleKeyDown)
+}, [isOpen, onClose])
+
+
+if (!isOpen) return null
 
   const services = [
     'Aso Ebi Collection',

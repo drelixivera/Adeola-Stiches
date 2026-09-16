@@ -40,15 +40,17 @@ const Contact = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    const message = `Hello Adeola! My name is ${formData.name}. ${formData.message}`
+    let message = `Hello Adeola! My name is ${formData.name}.`
+    if (formData.email) message += `\n📧 Email: ${formData.email}`
+    message += `\n\n${formData.message}`
     window.open(
-      `https://wa.me/${contactInfo.phone}?text=${encodeURIComponent(message)}`,
-      '_blank'
-    )
+    `https://wa.me/${contactInfo.phone}?text=${encodeURIComponent(message)}`,
+    '_blank'
+  )
     setIsSubmitted(true)
     setFormData({ name: '', email: '', message: '' })
     setTimeout(() => setIsSubmitted(false), 3000)
-  }
+}
 
   const quickInquiries = [
     {

@@ -25,15 +25,18 @@ const Apprenticeship = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    const message = `Hello Adeola! My name is ${formData.name}. I'm interested in your apprenticeship program. ${formData.message}`
+    let message = `Hello Adeola! My name is ${formData.name}. I'm interested in your apprenticeship program.`
+    if (formData.email) message += `\n📧 Email: ${formData.email}`
+    if (formData.phone) message += `\n📞 Phone: ${formData.phone}`
+    if (formData.message) message += `\n\n${formData.message}`
     window.open(
-      `https://wa.me/${contactInfo.phone}?text=${encodeURIComponent(message)}`,
-      '_blank'
-    )
+    `https://wa.me/${contactInfo.phone}?text=${encodeURIComponent(message)}`,
+    '_blank'
+  )
     setIsSubmitted(true)
     setFormData({ name: '', email: '', phone: '', message: '' })
     setTimeout(() => setIsSubmitted(false), 3000)
-  }
+}
 
   const handleQuickApply = () => {
     const message = "Hello Adeola! I'm interested in your apprenticeship program. Can you tell me more about it?"
