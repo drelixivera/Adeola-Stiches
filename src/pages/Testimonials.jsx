@@ -1,13 +1,10 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Star, Quote, ChevronLeft, ChevronRight, Sparkles } from 'lucide-react'
+import { Star, Quote, Sparkles } from 'lucide-react'
 import { testimonialsData } from '../data/testimonialsData'
 import ReviewModal from '../components/common/ReviewModal'
 
 const Testimonials = () => {
-  // State for carousel on mobile
-  const [currentIndex, setCurrentIndex] = useState(0)
-  const [showAll, setShowAll] = useState(false)
 
   // State for review modal
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false)
@@ -27,24 +24,7 @@ const Testimonials = () => {
     ? (totalRating / filteredTestimonials.length).toFixed(1) 
     : 0
 
-  // Get testimonials for carousel (max 3 on mobile)
-  const carouselItems = filteredTestimonials.slice(currentIndex, currentIndex + 3)
 
-  const nextSlide = () => {
-    if (currentIndex + 3 < filteredTestimonials.length) {
-      setCurrentIndex(currentIndex + 1)
-    } else {
-      setCurrentIndex(0)
-    }
-  }
-
-  const prevSlide = () => {
-    if (currentIndex > 0) {
-      setCurrentIndex(currentIndex - 1)
-    } else {
-      setCurrentIndex(Math.max(0, filteredTestimonials.length - 3))
-    }
-  }
 
   // Render star ratings
   const renderStars = (rating) => {
@@ -108,10 +88,7 @@ const Testimonials = () => {
         {services.map((service) => (
           <button
             key={service}
-            onClick={() => {
-              setActiveService(service)
-              setCurrentIndex(0)
-            }}
+            onClick={() => setActiveService(service)}
             className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
               activeService === service
                 ? 'bg-gold text-white shadow-md'
@@ -180,28 +157,6 @@ const Testimonials = () => {
         </div>
       )}
 
-      {/* Carousel Controls - Mobile Only */}
-      {filteredTestimonials.length > 3 && (
-        <div className="flex justify-center items-center gap-4 mt-8 md:hidden">
-          <button
-            onClick={prevSlide}
-            className="p-2 rounded-full bg-white shadow-md hover:bg-gold hover:text-white transition-colors"
-            aria-label="Previous"
-          >
-            <ChevronLeft size={20} />
-          </button>
-          <span className="text-sm text-dark/50">
-            {currentIndex + 1} - {Math.min(currentIndex + 3, filteredTestimonials.length)} of {filteredTestimonials.length}
-          </span>
-          <button
-            onClick={nextSlide}
-            className="p-2 rounded-full bg-white shadow-md hover:bg-gold hover:text-white transition-colors"
-            aria-label="Next"
-          >
-            <ChevronRight size={20} />
-          </button>
-        </div>
-      )}
 
       {/* Share Your Experience Section */}
       <div className="max-w-3xl mx-auto mt-20">

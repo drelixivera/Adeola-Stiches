@@ -12,6 +12,16 @@ import {
   X, ChevronLeft, ChevronRight
 } from 'lucide-react'
 import { contactInfo } from '../data/contactData'
+import { useModal } from '../context/ModalContext'
+
+// Maps gallery image categories → matching option in MeasurementOrderModal's Step 1
+const CATEGORY_TO_GARMENT = {
+  Traditional: 'Aso Ebi & Traditional',
+  Bridal: 'Bridal Couture',
+  Corporate: 'Corporate & Office Suit',
+  Children: "Children's Fashion",
+  Casual: 'Everyday Casual Chic',
+}
 
 const Gallery = () => {
   // ===== STATE =====
@@ -36,6 +46,9 @@ const Gallery = () => {
   // Refs
   const galleryRef = useRef(null)
   const filterBarRef = useRef(null)
+
+  // ===== MODAL =====
+  const { openOrderModal } = useModal()
 
   // ===== COMPUTED VALUES =====
   const categories = useMemo(() => {
@@ -123,8 +136,8 @@ const Gallery = () => {
   }
 
   const handleQuote = (image) => {
-    const message = `Hello Adeola! I'm interested in the "${image.title}" piece I saw on your gallery. Can I get a quote?`
-    window.open(`https://wa.me/${contactInfo.phone}?text=${encodeURIComponent(message)}`, '_blank')
+    const garment = CATEGORY_TO_GARMENT[image.category] || 'Bespoke Custom Dress'
+    openOrderModal(garment)
   }
 
   const clearSearch = () => {

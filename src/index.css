@@ -66,3 +66,43 @@
     transform: scale(1.05);
   }
 }
+
+/* ============================================
+   Global animations & utilities
+   ============================================ */
+
+/* Note: We do NOT set html { scroll-behavior: smooth } globally
+   because ScrollToTop needs 'instant' behavior on route changes. */
+
+@keyframes subtleZoom {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.05); }
+}
+
+.animate-subtleZoom {
+  animation: subtleZoom 20s ease-in-out infinite alternate;
+}
+
+/* Focus-visible for keyboard navigation */
+*:focus-visible {
+  outline: 2px solid #C9A84C;
+  outline-offset: 2px;
+}
+
+/* Skip to content link (for keyboard users) */
+.skip-to-content {
+  position: absolute;
+  top: -9999px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #C9A84C;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0 0 0.5rem 0.5rem;
+  z-index: 9999;
+  font-weight: 600;
+}
+
+.skip-to-content:focus {
+  top: 0;
+}

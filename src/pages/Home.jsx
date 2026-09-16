@@ -379,7 +379,9 @@ useEffect(() => {
                 <div className="flex items-center gap-1 mb-3" aria-label={`${testimonial.rating} out of 5 stars`}>
                   {renderStars(testimonial.rating)}
                 </div>
-                <p className="text-dark/70 text-sm leading-relaxed italic">"{testimonial.quote.slice(0, 120)}..."</p>
+                <p className="text-dark/70 text-sm leading-relaxed italic line-clamp-4">
+  "{testimonial.quote}"
+</p>
                 <div className="flex items-center gap-3 mt-4 pt-4 border-t border-cream">
                   <div className="w-10 h-10 rounded-full bg-gold/10 flex items-center justify-center text-gold font-medium" aria-hidden="true">
                     {testimonial.initials}
@@ -519,45 +521,6 @@ useEffect(() => {
           </motion.div>
         </div>
       </section>
-
-      {/* ===== CSS ANIMATIONS ===== */}
-      <style>{`
-        /* Smooth scrolling for the whole page */
-        html {
-          scroll-behavior: smooth;
-        }
-
-        @keyframes subtleZoom {
-          0% { transform: scale(1); }
-          100% { transform: scale(1.05); }
-        }
-        .animate-subtleZoom {
-          animation: subtleZoom 20s ease-in-out infinite alternate;
-        }
-
-        /* Focus-visible for keyboard navigation */
-        *:focus-visible {
-          outline: 2px solid #C9A84C;
-          outline-offset: 2px;
-        }
-
-        /* Skip to content link (for keyboard users) */
-        .skip-to-content {
-          position: absolute;
-          top: -9999px;
-          left: 50%;
-          transform: translateX(-50%);
-          background: #C9A84C;
-          color: white;
-          padding: 0.5rem 1rem;
-          border-radius: 0 0 0.5rem 0.5rem;
-          z-index: 9999;
-          font-weight: 600;
-        }
-        .skip-to-content:focus {
-          top: 0;
-        }
-      `}</style>
 
       {/* ===== SKIP TO CONTENT LINK ===== */}
       <a href="#main" className="skip-to-content">

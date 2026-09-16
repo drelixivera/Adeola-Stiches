@@ -93,42 +93,44 @@ const FAQAccordion = () => {
         {/* Accordion List */}
         <div className="max-w-3xl mx-auto space-y-3">
           {filteredFaqs.map((faq) => {
-            const isOpen = openId === faq.id
-            return (
-              <div
-                key={faq.id}
-                className={`rounded-2xl border transition-all duration-200 overflow-hidden ${
-                  isOpen ? 'border-gold bg-cream/30 shadow-sm' : 'border-gold/15 bg-white hover:border-gold/40'
-                }`}
-              >
-                <button
-                  type="button"
-                  onClick={() => toggle(faq.id)}
-                  className="w-full p-4 sm:p-5 flex items-center justify-between gap-4 text-left focus:outline-none"
-                  aria-expanded={isOpen}
-                >
-                  <span className="font-serif text-sm sm:text-base font-semibold text-dark">
-                    {faq.q}
-                  </span>
-                  <span className={`w-7 h-7 rounded-full flex items-center justify-center shrink-0 transition-transform duration-300 ${
-                    isOpen ? 'bg-gold text-white rotate-180' : 'bg-cream text-dark/60'
-                  }`}>
-                    <ChevronDown size={16} />
-                  </span>
-                </button>
+  const isOpen = openId === faq.id
+  return (
+    <div
+      key={faq.id}
+      className={`rounded-2xl border transition-all duration-200 overflow-hidden ${
+        isOpen ? 'border-gold bg-cream/30 shadow-sm' : 'border-gold/15 bg-white hover:border-gold/40'
+      }`}
+    >
+      <button
+        type="button"
+        onClick={() => toggle(faq.id)}
+        className="w-full p-4 sm:p-5 flex items-center justify-between gap-4 text-left focus:outline-none"
+        aria-expanded={isOpen}
+      >
+        <span className="font-serif text-sm sm:text-base font-semibold text-dark">
+          {faq.q}
+        </span>
+        <span className={`w-7 h-7 rounded-full flex items-center justify-center shrink-0 transition-transform duration-300 ${
+          isOpen ? 'bg-gold text-white rotate-180' : 'bg-cream text-dark/60'
+        }`}>
+          <ChevronDown size={16} />
+        </span>
+      </button>
 
-                <div 
-                  className={`overflow-hidden transition-all duration-300 ${
-                    isOpen ? 'max-h-64 opacity-100' : 'max-h-0 opacity-0'
-                  }`}
-                >
-                  <div className="px-5 pb-5 pt-1 border-t border-gold/10 text-xs sm:text-sm text-dark/75 leading-relaxed">
-                    {faq.a}
-                  </div>
-                </div>
-              </div>
-            )
-          })}
+      <div 
+        className={`grid transition-all duration-300 ease-in-out ${
+          isOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
+        }`}
+      >
+        <div className="overflow-hidden">
+          <div className="px-5 pb-5 pt-1 border-t border-gold/10 text-xs sm:text-sm text-dark/75 leading-relaxed">
+            {faq.a}
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+})}
         </div>
 
         {/* Help Banner */}
