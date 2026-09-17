@@ -59,7 +59,7 @@ const Navbar = () => {
               to="/" 
               className="font-serif text-xl md:text-2xl text-gold font-bold hover:text-terracotta transition-colors"
             >
-              Adeola Fashion
+              Adeola's Stitches
             </Link>
           </div>
 
