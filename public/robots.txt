@@ -1,0 +1,10 @@
+# robots.txt for Adeola Fashion Designer
+# https://adeola-fashion-designer.vercel.app
+User-agent: *
+Allow: /
+
+# Block search result pages from being indexed (they contain dynamic content)
+Disallow: /search
+
+# Sitemap location
+Sitemap: https://adeola-fashion-designer.vercel.app/sitemap.xml
