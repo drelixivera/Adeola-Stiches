@@ -50,7 +50,7 @@ const Footer = () => {
           <div className="lg:col-span-4 space-y-4">
             <Link to="/" className="inline-flex items-center gap-2 text-gold font-serif text-2xl font-bold hover:text-terracotta transition-colors">
               <Scissors size={24} className="text-gold transform -rotate-45" />
-              <span>Adeola Fashion</span>
+              <span>Adeola's Stitches</span>
             </Link>
             <p className="text-sm text-cream/70 leading-relaxed max-w-sm">
               Crafting timeless, custom-made Nigerian fashion that celebrates the beauty and individuality of every client. Where every stitch tells a story.
