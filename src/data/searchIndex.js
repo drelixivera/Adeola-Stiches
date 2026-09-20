@@ -1,7 +1,6 @@
 import { galleryImages } from './galleryData'
 import { servicesData } from './servicesData'
 import { testimonialsData } from './testimonialsData'
-import { contactInfo } from './contactData'
 
 // About page content
 const aboutContent = {
@@ -164,7 +163,7 @@ export const groupSearchResults = (results) => {
   })
   
   return Object.entries(groups)
-    .filter(([_, group]) => group.items.length > 0)
+    .filter(([, group]) => group.items.length > 0)
     .map(([key, group]) => ({
       type: key,
       ...group,

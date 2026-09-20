@@ -11,7 +11,7 @@ import { galleryImages } from '../data/galleryData'
 import { testimonialsData } from '../data/testimonialsData'
 import { servicesData } from '../data/servicesData'
 import { contactInfo } from '../data/contactData'
-import { useModal } from '../context/ModalContext'
+import { useModal } from '../hooks/useModal'
 import ProcessTimeline from '../components/common/ProcessTimeline'
 
 const Home = () => {
@@ -249,7 +249,7 @@ useEffect(() => {
             animate={featuredInView ? "visible" : "hidden"}
             className="grid grid-cols-2 md:grid-cols-4 gap-3 max-w-6xl mx-auto"
           >
-            {displayImages.map((img, index) => (
+            {displayImages.map((img) => (
               <motion.div 
                 key={img.id} 
                 variants={fadeInUp}
@@ -366,7 +366,7 @@ useEffect(() => {
             animate={testimonialsInView ? "visible" : "hidden"}
             className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto"
           >
-            {featuredTestimonials.map((testimonial, index) => (
+            {featuredTestimonials.map((testimonial) => (
               <motion.div 
                 key={testimonial.id} 
                 variants={fadeInUp}
@@ -433,7 +433,7 @@ useEffect(() => {
             animate={servicesInView ? "visible" : "hidden"}
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-6xl mx-auto"
           >
-            {displayServices.map((service, index) => {
+            {displayServices.map((service) => {
               const iconMap = {
                 'Scissors': '✂️',
                 'Sparkles': '✨',

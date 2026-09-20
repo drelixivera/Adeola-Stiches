@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { MessageCircle, X, Sparkles, Send } from 'lucide-react'
+import { MessageCircle, X, Send } from 'lucide-react'
 import { contactInfo } from '../../data/contactData'
 
 const WhatsAppButton = () => {

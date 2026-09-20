@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { X, Star, Heart, MessageCircle, Sparkles } from 'lucide-react'
+import { X, Star, MessageCircle } from 'lucide-react'
 import { contactInfo } from '../../data/contactData'
 
 const ReviewModal = ({ isOpen, onClose }) => {
@@ -9,18 +9,6 @@ const ReviewModal = ({ isOpen, onClose }) => {
   const [location, setLocation] = useState('')
   const [service, setService] = useState('Aso Ebi Collection')
   const [quote, setQuote] = useState('')
-
-// Reset form when modal opens
-useEffect(() => {
-  if (isOpen) {
-    setRating(5)
-    setHoverRating(0)
-    setName('')
-    setLocation('')
-    setService('Aso Ebi Collection')
-    setQuote('')
-  }
-}, [isOpen])
 
 // Prevent background scrolling when modal is open
 useEffect(() => {

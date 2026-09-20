@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import { 
   Scissors, Phone, Mail, MapPin, Clock, 
-  Heart, ArrowRight, MessageCircle 
+  ArrowRight, MessageCircle 
 } from 'lucide-react'
 import { contactInfo } from '../../data/contactData'
 

@@ -216,9 +216,10 @@ const Testimonials = () => {
 
       {/* Review Modal */}
       <ReviewModal
+        key={isReviewModalOpen ? 'open' : 'closed'}
         isOpen={isReviewModalOpen}
         onClose={() => setIsReviewModalOpen(false)}
-      />
+/>
     </div>
   )
 }

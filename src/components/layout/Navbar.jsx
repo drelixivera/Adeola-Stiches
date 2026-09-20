@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { Menu, X, Phone, Search, XCircle, Sparkles } from 'lucide-react'
 import { navLinks } from '../../data/navLinks'
 import { contactInfo } from '../../data/contactData'
-import { useModal } from '../../context/ModalContext'
+import { useModal } from '../../hooks/useModal'
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -32,11 +32,12 @@ const Navbar = () => {
     }
   }
 
-  // Close search when clicking outside or navigating away
-  useEffect(() => {
-    setSearchOpen(false)
-    setSearchQuery('')
-  }, [location.pathname])
+  const closeSearch = () => {
+    if (searchOpen) {
+      setSearchOpen(false)
+      setSearchQuery('')
+    }
+  }
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md shadow-sm transition-all duration-300">
@@ -54,9 +55,10 @@ const Navbar = () => {
               {isOpen ? <X size={28} /> : <Menu size={28} />}
             </button>
 
-            {/* Logo - Now left-aligned on mobile */}
+            {/* Logo */}
             <Link 
-              to="/" 
+              to="/"
+              onClick={closeSearch} 
               className="font-serif text-xl md:text-2xl text-gold font-bold hover:text-terracotta transition-colors"
             >
               Adeola's Stitches
@@ -69,6 +71,7 @@ const Navbar = () => {
               <Link
                 key={link.path}
                 to={link.path}
+                onClick={closeSearch}
                 className={`text-xs lg:text-sm font-medium transition-colors hover:text-gold relative group ${
                   location.pathname === link.path 
                     ? 'text-gold' 
@@ -138,7 +141,7 @@ const Navbar = () => {
                 <Link
                   key={link.path}
                   to={link.path}
-                  onClick={closeMenu}
+                  onClick={() => { closeMenu(); closeSearch(); }}
                   className={`text-base font-medium py-2 px-3 rounded-lg transition-colors ${
                     location.pathname === link.path 
                       ? 'bg-gold/10 text-gold' 

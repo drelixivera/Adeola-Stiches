@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
 import { 
-  X, Scissors, Sparkles, CheckCircle2, 
-  ArrowRight, ArrowLeft, Ruler, Calendar, 
-  User, MapPin, MessageCircle, Copy, Check, Info 
+  X, Scissors, CheckCircle2, 
+  ArrowRight, ArrowLeft, Ruler, 
+  MapPin, MessageCircle, Copy, Check, Info 
 } from 'lucide-react'
 import { contactInfo } from '../../data/contactData'
 
@@ -32,32 +32,6 @@ const MeasurementOrderModal = ({ isOpen, onClose, initialService = '' }) => {
     eventDate: '',
     specialNotes: '',
   })
-
-  // Reset form when modal opens
-useEffect(() => {
-  if (isOpen) {
-    setStep(1)
-    setShowTips(false)
-    setFormData({
-      garmentType: initialService || 'Aso Ebi & Traditional Wear',
-      fabricStatus: 'I have my own fabric',
-      fabricDetails: '',
-      measurementType: 'custom',
-      standardSize: 'M (UK 12 / US 8)',
-      bust: '',
-      waist: '',
-      hips: '',
-      shoulder: '',
-      sleeve: '',
-      length: '',
-      clientName: '',
-      clientPhone: '',
-      clientLocation: 'Ibadan',
-      eventDate: '',
-      specialNotes: '',
-    })
-  }
-}, [isOpen, initialService])
 
 // Prevent background scrolling when modal is open
 useEffect(() => {

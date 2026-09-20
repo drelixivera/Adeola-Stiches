@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react'
+import { createContext, useState } from 'react'
 
 const ModalContext = createContext({
   isOrderModalOpen: false,
@@ -34,7 +34,5 @@ export const ModalProvider = ({ children }) => {
     </ModalContext.Provider>
   )
 }
-
-export const useModal = () => useContext(ModalContext)
 
 export default ModalContext

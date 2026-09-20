@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { 
-  Scissors, GraduationCap, Clock, Award, Users, 
+  Scissors, Users, 
   CheckCircle, MessageCircle, BookOpen, TrendingUp,
   Star, ArrowRight
 } from 'lucide-react'

@@ -8,7 +8,7 @@ import {
   ChevronDown, ChevronUp
 } from 'lucide-react'
 import { contactInfo } from '../data/contactData'
-import { useModal } from '../context/ModalContext'
+import { useModal } from '../hooks/useModal'
 import ProcessTimeline from '../components/common/ProcessTimeline'
 import FAQAccordion from '../components/common/FAQAccordion'
 

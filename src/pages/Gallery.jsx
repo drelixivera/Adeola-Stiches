@@ -1,27 +1,15 @@
-import { useState, useMemo, useEffect, useRef } from 'react'
+import { useState, useMemo, useRef } from 'react'
 import { useSearchParams, Link } from 'react-router-dom'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { galleryImages } from '../data/galleryData'
 import Lightbox from 'yet-another-react-lightbox'
 import 'yet-another-react-lightbox/styles.css'
 import { Zoom, Thumbnails, Share, Fullscreen } from 'yet-another-react-lightbox/plugins'
 import { 
-  Filter, ChevronDown, Sparkles, MessageCircle, 
+  Filter, ChevronDown, MessageCircle, 
   Plus, Loader2, Image as ImageIcon, Tag, 
-  Grid3x3, LayoutGrid, Heart,
-  X, ChevronLeft, ChevronRight
 } from 'lucide-react'
 import { contactInfo } from '../data/contactData'
-import { useModal } from '../context/ModalContext'
-
-// Maps gallery image categories → matching option in MeasurementOrderModal's Step 1
-const CATEGORY_TO_GARMENT = {
-  Traditional: 'Aso Ebi & Traditional',
-  Bridal: 'Bridal Couture',
-  Corporate: 'Corporate & Office Suit',
-  Children: "Children's Fashion",
-  Casual: 'Everyday Casual Chic',
-}
 
 const Gallery = () => {
   // ===== STATE =====
@@ -46,9 +34,6 @@ const Gallery = () => {
   // Refs
   const galleryRef = useRef(null)
   const filterBarRef = useRef(null)
-
-  // ===== MODAL =====
-  const { openOrderModal } = useModal()
 
   // ===== COMPUTED VALUES =====
   const categories = useMemo(() => {
@@ -109,12 +94,14 @@ const Gallery = () => {
   // Get featured image for hero
   const featuredImage = galleryImages.find(img => img.featured) || galleryImages[0]
 
-  // Prepare lightbox images
-  const lightboxImages = galleryImages.map(img => ({ 
-    src: img.image,
-    title: img.title,
-    description: img.description,
-  }))
+  // Lightbox slides reflect the CURRENT filtered view (not the full gallery)
+  const lightboxImages = useMemo(() => {
+    return filteredImages.map(img => ({ 
+      src: img.image,
+      title: img.title,
+      description: img.description,
+    }))
+  }, [filteredImages])
 
   // ===== HANDLERS =====
   const openLightbox = (index) => {
@@ -122,22 +109,15 @@ const Gallery = () => {
     setLightboxOpen(true)
   }
 
-  const handleShare = (image) => {
-    if (navigator.share) {
-      navigator.share({
-        title: image.title,
-        text: `Check out this amazing piece by Adeola Fashion Designer: ${image.title}`,
-        url: window.location.href,
-      }).catch(() => {})
-    } else {
-      navigator.clipboard.writeText(window.location.href)
-      alert('Link copied! Share it with your friends.')
-    }
+  const handleCategoryChange = (category) => {
+    setActiveCategory(category)
+    setVisibleCount(ITEMS_PER_PAGE)
+    if (searchQuery) clearSearch()
   }
 
-  const handleQuote = (image) => {
-    const garment = CATEGORY_TO_GARMENT[image.category] || 'Bespoke Custom Dress'
-    openOrderModal(garment)
+  const handleSortChange = (e) => {
+    setSortBy(e.target.value)
+    setVisibleCount(ITEMS_PER_PAGE)
   }
 
   const clearSearch = () => {
@@ -152,11 +132,6 @@ const Gallery = () => {
       setIsLoading(false)
     }, 600)
   }
-
-  // Reset pagination when filters change
-  useEffect(() => {
-    setVisibleCount(ITEMS_PER_PAGE)
-  }, [activeCategory, sortBy, searchQuery])
 
   // Animation variants
   const containerVariants = {
@@ -251,10 +226,7 @@ const Gallery = () => {
               {categories.map((category) => (
                 <button
                   key={category}
-                  onClick={() => {
-                    setActiveCategory(category)
-                    if (searchQuery) clearSearch()
-                  }}
+                  onClick={() => handleCategoryChange(category)}
                   className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-300 ${
                     activeCategory === category
                       ? 'bg-gold text-white shadow-md'
@@ -293,9 +265,8 @@ const Gallery = () => {
                     <button
                       key={category}
                       onClick={() => {
-                        setActiveCategory(category)
+                        handleCategoryChange(category)
                         setShowFilters(false)
-                        if (searchQuery) clearSearch()
                       }}
                       className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${
                         activeCategory === category
@@ -325,7 +296,7 @@ const Gallery = () => {
             <div className="flex items-center gap-2">
               <select
                 value={sortBy}
-                onChange={(e) => setSortBy(e.target.value)}
+                onChange={handleSortChange}
                 className="bg-cream/50 border border-gold/20 rounded-lg px-3 py-1.5 text-sm text-dark/70 focus:outline-none focus:border-gold"
               >
                 <option value="newest">Newest</option>
@@ -348,7 +319,6 @@ const Gallery = () => {
               className="columns-2 md:columns-3 lg:columns-4 gap-3 md:gap-4 space-y-3 md:space-y-4 max-w-7xl mx-auto"
             >
               {visibleImages.map((image, index) => {
-                const realIndex = galleryImages.findIndex(img => img.id === image.id)
                 // Random height variation for masonry effect
                 const heightClass = ['h-64', 'h-72', 'h-80', 'h-96', 'h-[28rem]', 'h-[32rem]'][index % 6]
                 
@@ -358,7 +328,7 @@ const Gallery = () => {
                     variants={itemVariants}
                     layout
                     className="break-inside-avoid mb-3 md:mb-4 group cursor-pointer relative rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500"
-                    onClick={() => openLightbox(realIndex)}
+                    onClick={() => openLightbox(index)}
                   >
                     <div className={`relative ${heightClass} bg-warmBeige overflow-hidden`}>
                       <img 
@@ -369,7 +339,7 @@ const Gallery = () => {
                       />
                       
                       {/* Gradient Overlay */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-dark/80 via-dark/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-dark/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                       
                       {/* Featured Badge */}
                       {image.featured && (
@@ -381,30 +351,6 @@ const Gallery = () => {
                       {/* Category Badge */}
                       <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm px-2.5 py-1 rounded-full text-xs font-medium text-gold shadow-lg z-10">
                         {image.category}
-                      </div>
-
-                      {/* Hover Overlay Content */}
-                      <div className="absolute inset-0 flex flex-col justify-end p-4 md:p-5 opacity-0 group-hover:opacity-100 transition-all duration-500 z-10">
-                        <h3 className="text-white font-serif text-lg md:text-xl font-bold mb-0.5">
-                          {image.title}
-                        </h3>
-                        <p className="text-white/80 text-xs md:text-sm mb-3 line-clamp-2">
-                          {image.subcategory || image.category}
-                        </p>
-                        <div className="flex items-center gap-2">
-                          <span className="text-white/80 text-xs bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full">
-                            Explore →
-                          </span>
-                        </div>
-                      </div>
-
-                      {/* Tags - visible on hover */}
-                      <div className="absolute bottom-3 right-3 flex flex-wrap gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10">
-                        {image.tags?.slice(0, 2).map((tag) => (
-                          <span key={tag} className="text-[10px] bg-white/20 backdrop-blur-sm text-white px-2 py-0.5 rounded-full">
-                            {tag}
-                          </span>
-                        ))}
                       </div>
                     </div>
                   </motion.div>
@@ -472,7 +418,7 @@ const Gallery = () => {
               <button 
                 onClick={() => {
                   setActiveCategory('All')
-                  if (searchQuery) clearSearch()
+                  setVisibleCount(ITEMS_PER_PAGE)
                 }}
                 className="mt-4 text-gold hover:underline"
               >

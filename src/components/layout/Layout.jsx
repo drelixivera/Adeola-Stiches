@@ -4,7 +4,7 @@ import Navbar from './Navbar'
 import Footer from './Footer'
 import WhatsAppButton from '../common/WhatsAppButton'
 import MeasurementOrderModal from '../common/MeasurementOrderModal'
-import { useModal } from '../../context/ModalContext'
+import { useModal } from '../../hooks/useModal'
 
 const Layout = ({ children }) => {
   const [showScrollTop, setShowScrollTop] = useState(false)
@@ -40,10 +40,11 @@ const Layout = ({ children }) => {
 
       {/* Global Interactive Measurement & Custom Order Modal */}
       <MeasurementOrderModal
+        key={isOrderModalOpen ? `open-${selectedService || 'default'}` : 'closed'}
         isOpen={isOrderModalOpen}
         onClose={closeOrderModal}
         initialService={selectedService}
-      />
+/>
 
       {/* Global Scroll-to-Top Button */}
       <button

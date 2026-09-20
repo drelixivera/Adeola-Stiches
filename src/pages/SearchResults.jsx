@@ -2,7 +2,7 @@ import { useSearchParams, Link } from 'react-router-dom'
 import { searchContent, groupSearchResults } from '../data/searchIndex'
 import { 
   Search, Image, Scissors, Star, User, GraduationCap, 
-  ArrowRight, Grid3X3, XCircle, MessageCircle
+  ArrowRight, XCircle
 } from 'lucide-react'
 
 const SearchResults = () => {
