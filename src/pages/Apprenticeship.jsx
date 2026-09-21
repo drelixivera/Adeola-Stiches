@@ -6,6 +6,7 @@ import {
   Star, ArrowRight
 } from 'lucide-react'
 import { contactInfo } from '../data/contactData'
+import { openWhatsApp } from '../utils/openWhatsApp'
 
 const Apprenticeship = () => {
   const [formData, setFormData] = useState({
@@ -29,10 +30,7 @@ const Apprenticeship = () => {
     if (formData.email) message += `\n📧 Email: ${formData.email}`
     if (formData.phone) message += `\n📞 Phone: ${formData.phone}`
     if (formData.message) message += `\n\n${formData.message}`
-    window.open(
-    `https://wa.me/${contactInfo.phone}?text=${encodeURIComponent(message)}`,
-    '_blank'
-  )
+    openWhatsApp(`https://wa.me/${contactInfo.phone}?text=${encodeURIComponent(message)}`)
     setIsSubmitted(true)
     setFormData({ name: '', email: '', phone: '', message: '' })
     setTimeout(() => setIsSubmitted(false), 3000)
@@ -40,10 +38,7 @@ const Apprenticeship = () => {
 
   const handleQuickApply = () => {
     const message = "Hello Adeola! I'm interested in your apprenticeship program. Can you tell me more about it?"
-    window.open(
-      `https://wa.me/${contactInfo.phone}?text=${encodeURIComponent(message)}`,
-      '_blank'
-    )
+    openWhatsApp(`https://wa.me/${contactInfo.phone}?text=${encodeURIComponent(message)}`)
   }
 
   // Program highlights

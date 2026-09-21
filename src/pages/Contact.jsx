@@ -6,8 +6,8 @@ import {
 } from 'lucide-react'
 import { contactInfo } from '../data/contactData'
 import FAQAccordion from '../components/common/FAQAccordion'
+import { openWhatsApp } from '../utils/openWhatsApp'
 
-// Lucide React doesn't have Instagram/Facebook as default exports
 // We'll create simple SVG icons or use the ones that exist
 const InstagramIcon = (props) => (
   <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -43,10 +43,7 @@ const Contact = () => {
     let message = `Hello Adeola! My name is ${formData.name}.`
     if (formData.email) message += `\n📧 Email: ${formData.email}`
     message += `\n\n${formData.message}`
-    window.open(
-    `https://wa.me/${contactInfo.phone}?text=${encodeURIComponent(message)}`,
-    '_blank'
-  )
+    openWhatsApp(`https://wa.me/${contactInfo.phone}?text=${encodeURIComponent(message)}`)
     setIsSubmitted(true)
     setFormData({ name: '', email: '', message: '' })
     setTimeout(() => setIsSubmitted(false), 3000)
@@ -72,10 +69,7 @@ const Contact = () => {
   ]
 
   const handleQuickInquiry = (message) => {
-    window.open(
-      `https://wa.me/${contactInfo.phone}?text=${encodeURIComponent(message)}`,
-      '_blank'
-    )
+    openWhatsApp(`https://wa.me/${contactInfo.phone}?text=${encodeURIComponent(message)}`)
   }
 
   return (

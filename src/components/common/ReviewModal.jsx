@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { X, Star, MessageCircle } from 'lucide-react'
 import { contactInfo } from '../../data/contactData'
+import { openWhatsApp } from '../../utils/openWhatsApp'
 
 const ReviewModal = ({ isOpen, onClose }) => {
   const [rating, setRating] = useState(5)
@@ -56,11 +57,7 @@ if (!isOpen) return null
       `💬 *Review / Testimonial:*\n"${quote}"\n\n` +
       `_Submitted to Adeola Fashion Designer Website_`
 
-    window.open(
-      `https://wa.me/${contactInfo.phone}?text=${encodeURIComponent(msg)}`,
-      '_blank',
-      'noopener,noreferrer'
-    )
+    openWhatsApp(`https://wa.me/${contactInfo.phone}?text=${encodeURIComponent(msg)}`)
     onClose()
   }
 

@@ -5,6 +5,7 @@ import {
   MapPin, MessageCircle, Copy, Check, Info 
 } from 'lucide-react'
 import { contactInfo } from '../../data/contactData'
+import { openWhatsApp } from '../../utils/openWhatsApp'
 
 const MeasurementOrderModal = ({ isOpen, onClose, initialService = '' }) => {
   const [step, setStep] = useState(1)
@@ -117,14 +118,14 @@ useEffect(() => {
   }
 
   const handleSendWhatsApp = () => {
-    const message = generateWhatsAppMessage()
-    window.open(
-      `https://wa.me/${contactInfo.phone}?text=${encodeURIComponent(message)}`,
-      '_blank',
-      'noopener,noreferrer'
-    )
-    onClose()
+    if (!formData.clientName.trim()) {
+      alert('Please enter your name before sending your order.')
+      return
   }
+  const message = generateWhatsAppMessage()
+  openWhatsApp(`https://wa.me/${contactInfo.phone}?text=${encodeURIComponent(message)}`)
+  onClose()
+}
 
   const handleCopySummary = () => {
     const message = generateWhatsAppMessage()
@@ -358,6 +359,8 @@ useEffect(() => {
                       </label>
                       <input
                         type="number"
+                        min="10"
+                        max="100"
                         step="0.5"
                         value={formData[field.key]}
                         onChange={(e) => setFormData({ ...formData, [field.key]: e.target.value })}
@@ -467,6 +470,7 @@ useEffect(() => {
                   </label>
                   <input
                     type="date"
+                    min={new Date().toISOString().split('T')[0]}
                     value={formData.eventDate}
                     onChange={(e) => setFormData({ ...formData, eventDate: e.target.value })}
                     className="w-full px-3.5 py-2.5 rounded-lg border border-gold/30 text-sm focus:outline-none focus:border-gold"

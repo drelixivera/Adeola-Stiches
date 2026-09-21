@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { MessageCircle, X, Send } from 'lucide-react'
 import { contactInfo } from '../../data/contactData'
+import { openWhatsApp } from '../../utils/openWhatsApp'
 
 const WhatsAppButton = () => {
   const [isVisible, setIsVisible] = useState(false)
@@ -51,11 +52,7 @@ const WhatsAppButton = () => {
   ]
 
   const handleQuickMessage = (message) => {
-    window.open(
-      `https://wa.me/${contactInfo.phone}?text=${encodeURIComponent(message)}`,
-      '_blank',
-      'noopener,noreferrer'
-    )
+    openWhatsApp(`https://wa.me/${contactInfo.phone}?text=${encodeURIComponent(message)}`)
     setIsOpen(false)
   }
 
