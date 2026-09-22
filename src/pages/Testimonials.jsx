@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { Star, Quote, Sparkles } from 'lucide-react'
 import { testimonialsData } from '../data/testimonialsData'
 import ReviewModal from '../components/common/ReviewModal'
+import { useDocumentTitle } from '../hooks/useDocumentTitle'
 
 const Testimonials = () => {
 
@@ -37,11 +38,14 @@ const Testimonials = () => {
     ))
   }
 
+  // calling useDocumentTitle
+  useDocumentTitle('Client Testimonials')
+
   return (
     <div className="container mx-auto px-4 py-16">
       {/* Page Header */}
       <div className="text-center max-w-3xl mx-auto mb-12">
-        <span className="text-gold font-medium text-sm tracking-wider uppercase">
+        <span className="text-gold-text font-medium text-sm tracking-wider uppercase">
           Client Stories
         </span>
         <h1 className="text-4xl md:text-5xl font-serif text-dark mt-2 mb-4">
@@ -150,7 +154,7 @@ const Testimonials = () => {
           <p className="text-dark/60">No testimonials in this category yet.</p>
           <button 
             onClick={() => setActiveService('All')}
-            className="mt-4 text-gold hover:underline"
+            className="mt-4 text-gold-text hover:underline"
           >
             View all reviews
           </button>

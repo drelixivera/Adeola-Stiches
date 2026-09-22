@@ -1,8 +1,12 @@
 import { Link } from 'react-router-dom'
 import { Scissors, Home, Image, MessageCircle, ArrowRight } from 'lucide-react'
 import { contactInfo } from '../data/contactData'
+import { useDocumentTitle } from '../hooks/useDocumentTitle'
 
 const NotFound = () => {
+  // calling use document title
+  useDocumentTitle('Page Not Found')
+  
   return (
     <div className="min-h-[75vh] flex items-center justify-center px-4 py-20 bg-gradient-to-b from-cream via-white to-cream">
       <div className="max-w-xl mx-auto text-center">
@@ -11,7 +15,7 @@ const NotFound = () => {
           <Scissors size={38} className="transform -rotate-45" />
         </div>
 
-        <p className="text-sm font-semibold tracking-widest uppercase text-gold mb-2">
+        <p className="text-sm font-semibold tracking-widest uppercase text-gold-text mb-2">
           404 — Page Not Found
         </p>
 

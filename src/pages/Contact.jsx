@@ -7,6 +7,7 @@ import {
 import { contactInfo } from '../data/contactData'
 import FAQAccordion from '../components/common/FAQAccordion'
 import { openWhatsApp } from '../utils/openWhatsApp'
+import { useDocumentTitle } from '../hooks/useDocumentTitle'
 
 // We'll create simple SVG icons or use the ones that exist
 const InstagramIcon = (props) => (
@@ -72,11 +73,14 @@ const Contact = () => {
     openWhatsApp(`https://wa.me/${contactInfo.phone}?text=${encodeURIComponent(message)}`)
   }
 
+  // calling useDocumentTitle
+  useDocumentTitle('Contact the Atelier')
+
   return (
     <div className="container mx-auto px-4 py-16">
       {/* Page Header */}
       <div className="text-center max-w-3xl mx-auto mb-12">
-        <span className="text-gold font-medium text-sm tracking-wider uppercase">
+        <span className="text-gold-text font-medium text-sm tracking-wider uppercase">
           Get In Touch
         </span>
         <h1 className="text-4xl md:text-5xl font-serif text-dark mt-2 mb-4">

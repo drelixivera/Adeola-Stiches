@@ -10,6 +10,7 @@ import {
   Plus, Loader2, Image as ImageIcon, Tag, 
 } from 'lucide-react'
 import { contactInfo } from '../data/contactData'
+import { useDocumentTitle } from '../hooks/useDocumentTitle'
 
 const Gallery = () => {
   // ===== STATE =====
@@ -154,6 +155,9 @@ const Gallery = () => {
     }
   }
 
+  // calling useDocumentTitle
+  useDocumentTitle('Gallery of Creations')
+
   return (
     <div className="min-h-screen bg-cream" ref={galleryRef}>
       {/* ===== HERO BANNER ===== */}
@@ -201,11 +205,11 @@ const Gallery = () => {
         <div className="container mx-auto px-4 py-4">
           <div className="inline-flex items-center gap-2 bg-gold/10 rounded-full px-4 py-2 border border-gold/20">
             <p className="text-sm text-dark/70">
-              Showing results for: <span className="font-medium text-gold">"{searchQuery}"</span>
+              Showing results for: <span className="font-medium text-gold-text">"{searchQuery}"</span>
               {' '}({filteredImages.length} {filteredImages.length === 1 ? 'result' : 'results'})
               <button 
                 onClick={clearSearch}
-                className="ml-2 text-gold hover:text-terracotta transition-colors font-medium"
+                className="ml-2 text-gold-text hover:text-terracotta transition-colors font-medium"
               >
                 ✕ Clear
               </button>
@@ -283,7 +287,7 @@ const Gallery = () => {
                         clearSearch()
                         setShowFilters(false)
                       }}
-                      className="w-full text-left px-3 py-2 rounded-lg text-sm text-gold hover:bg-cream transition-colors mt-1 border-t border-cream"
+                      className="w-full text-left px-3 py-2 rounded-lg text-sm text-gold-text hover:bg-cream transition-colors mt-1 border-t border-cream"
                     >
                       ✕ Clear Search
                     </button>
@@ -409,7 +413,7 @@ const Gallery = () => {
             {searchQuery && (
               <button 
                 onClick={clearSearch}
-                className="mt-4 text-gold hover:underline font-medium"
+                className="mt-4 text-gold-text hover:underline font-medium"
               >
                 View all images
               </button>
@@ -420,7 +424,7 @@ const Gallery = () => {
                   setActiveCategory('All')
                   setVisibleCount(ITEMS_PER_PAGE)
                 }}
-                className="mt-4 text-gold hover:underline"
+                className="mt-4 text-gold-text hover:underline"
               >
                 View all images
               </button>

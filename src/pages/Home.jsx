@@ -13,6 +13,7 @@ import { servicesData } from '../data/servicesData'
 import { contactInfo } from '../data/contactData'
 import { useModal } from '../hooks/useModal'
 import ProcessTimeline from '../components/common/ProcessTimeline'
+import { useDocumentTitle } from '../hooks/useDocumentTitle'
 
 const Home = () => {
   // ===== STATE =====
@@ -97,6 +98,9 @@ useEffect(() => {
       transition: { duration: 0.5, ease: 'easeOut' }
     }
   }
+
+  // calling useDocumentTitle
+  useDocumentTitle('')
 
   return (
     <div className="overflow-hidden">
@@ -234,7 +238,7 @@ useEffect(() => {
             animate={featuredInView ? "visible" : "hidden"}
             className="text-center max-w-2xl mx-auto mb-10"
           >
-            <span className="text-gold font-medium text-sm tracking-wider uppercase">Portfolio</span>
+            <span className="text-gold-text font-medium text-sm tracking-wider uppercase">Portfolio</span>
             <h2 className="text-3xl md:text-4xl font-serif text-dark mt-2">
               Featured <span className="text-gold">Creations</span>
             </h2>
@@ -286,7 +290,7 @@ useEffect(() => {
           >
             <Link 
               to="/gallery" 
-              className="text-gold font-medium hover:text-terracotta transition-colors inline-flex items-center gap-1 group focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2 rounded-lg px-2 py-1"
+              className="text-gold-text font-medium hover:text-terracotta transition-colors inline-flex items-center gap-1 group focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2 rounded-lg px-2 py-1"
               aria-label="View full gallery"
             >
               View Full Gallery <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform duration-300" aria-hidden="true" />
@@ -304,7 +308,7 @@ useEffect(() => {
             animate={whyInView ? "visible" : "hidden"}
             className="text-center max-w-2xl mx-auto mb-10"
           >
-            <span className="text-gold font-medium text-sm tracking-wider uppercase">Why Choose Adeola</span>
+            <span className="text-gold-text font-medium text-sm tracking-wider uppercase">Why Choose Adeola</span>
             <h2 className="text-3xl md:text-4xl font-serif text-dark mt-2">
               Craftsmanship You <span className="text-gold">Can Trust</span>
             </h2>
@@ -354,7 +358,7 @@ useEffect(() => {
             animate={testimonialsInView ? "visible" : "hidden"}
             className="text-center max-w-2xl mx-auto mb-10"
           >
-            <span className="text-gold font-medium text-sm tracking-wider uppercase">Testimonials</span>
+            <span className="text-gold-text font-medium text-sm tracking-wider uppercase">Testimonials</span>
             <h2 className="text-3xl md:text-4xl font-serif text-dark mt-2">
               What Our <span className="text-gold">Clients Say</span>
             </h2>
@@ -403,7 +407,7 @@ useEffect(() => {
           >
             <Link 
               to="/testimonials" 
-              className="text-gold font-medium hover:text-terracotta transition-colors inline-flex items-center gap-1 group focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2 rounded-lg px-2 py-1"
+              className="text-gold-text font-medium hover:text-terracotta transition-colors inline-flex items-center gap-1 group focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2 rounded-lg px-2 py-1"
               aria-label="Read all testimonials"
             >
               Read All Testimonials <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform duration-300" aria-hidden="true" />
@@ -421,7 +425,7 @@ useEffect(() => {
             animate={servicesInView ? "visible" : "hidden"}
             className="text-center max-w-2xl mx-auto mb-10"
           >
-            <span className="text-gold font-medium text-sm tracking-wider uppercase">Services</span>
+            <span className="text-gold-text font-medium text-sm tracking-wider uppercase">Services</span>
             <h2 className="text-3xl md:text-4xl font-serif text-dark mt-2">
               What <span className="text-gold">She Offers</span>
             </h2>
@@ -459,7 +463,7 @@ useEffect(() => {
                   >
                     <div className="text-3xl mb-2" aria-hidden="true">{emoji}</div>
                     <h4 className="font-serif text-dark font-medium">{service.title}</h4>
-                    <p className="text-xs text-gold font-medium mt-1">{service.price}</p>
+                    <p className="text-gold-text text-gold font-medium mt-1">{service.price}</p>
                   </Link>
                 </motion.div>
               )
@@ -474,7 +478,7 @@ useEffect(() => {
           >
             <Link 
               to="/services" 
-              className="text-gold font-medium hover:text-terracotta transition-colors inline-flex items-center gap-1 group focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2 rounded-lg px-2 py-1"
+              className="text-gold-text font-medium hover:text-terracotta transition-colors inline-flex items-center gap-1 group focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2 rounded-lg px-2 py-1"
               aria-label="View all services"
             >
               View All Services <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform duration-300" aria-hidden="true" />

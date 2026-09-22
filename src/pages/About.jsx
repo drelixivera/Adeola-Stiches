@@ -2,8 +2,12 @@ import { Link } from 'react-router-dom'
 import { Award, Heart, Scissors, Users } from 'lucide-react'
 import { contactInfo } from '../data/contactData'
 import momPhoto from '../assets/images/adeola-profile.jpg'
+import { useDocumentTitle } from '../hooks/useDocumentTitle'
 
 const About = () => {
+  //calling useDocumentTitle
+  useDocumentTitle('About Adeola')
+  
   return (
     <div className="container mx-auto px-4 py-16">
       {/* Hero Section with Image */}
@@ -27,7 +31,7 @@ const About = () => {
 
         {/* Text Section */}
         <div className="order-1 md:order-2">
-          <span className="text-gold font-medium text-sm tracking-wider uppercase">
+          <span className="text-gold-text font-medium text-sm tracking-wider uppercase">
             About Adeola
           </span>
           <h1 className="text-4xl md:text-5xl font-serif text-dark mt-2 mb-6">
@@ -60,7 +64,7 @@ const About = () => {
       {/* Values Section */}
       <div className="max-w-6xl mx-auto mt-20">
         <div className="text-center mb-12">
-          <span className="text-gold font-medium text-sm tracking-wider uppercase">
+          <span className="text-gold-text font-medium text-sm tracking-wider uppercase">
             What She Stands For
           </span>
           <h2 className="text-3xl md:text-4xl font-serif text-dark mt-2">

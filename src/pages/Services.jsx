@@ -11,6 +11,7 @@ import { contactInfo } from '../data/contactData'
 import { useModal } from '../hooks/useModal'
 import ProcessTimeline from '../components/common/ProcessTimeline'
 import FAQAccordion from '../components/common/FAQAccordion'
+import { useDocumentTitle } from '../hooks/useDocumentTitle'
 
 // Map icon names to components
 const iconMap = {
@@ -54,11 +55,14 @@ const Services = () => {
     setExpandedService(expandedService === id ? null : id)
   }
 
+  // calling useDocumentTitle
+  useDocumentTitle('Bespoke Services')
+
   return (
     <div className="container mx-auto px-4 py-16">
       {/* Page Header */}
       <div className="text-center max-w-3xl mx-auto mb-12">
-        <span className="text-gold font-medium text-sm tracking-wider uppercase">
+        <span className="text-gold-text font-medium text-sm tracking-wider uppercase">
           What She Offers
         </span>
         <h1 className="text-4xl md:text-5xl font-serif text-dark mt-2 mb-4">
@@ -123,7 +127,7 @@ const Services = () => {
                         </span>
                       )}
                     </div>
-                    <p className="text-sm text-gold font-medium mt-1">
+                    <p className="text-sm text-gold-text font-medium mt-1">
                       {service.price}
                     </p>
                     <p className="text-sm text-dark/60 mt-1 line-clamp-2 md:hidden">
@@ -199,7 +203,7 @@ const Services = () => {
           <p className="text-dark/60">No services in this category yet.</p>
           <button 
             onClick={() => setActiveCategory('All')}
-            className="mt-4 text-gold hover:underline"
+            className="mt-4 text-gold-text hover:underline"
           >
             View all services
           </button>

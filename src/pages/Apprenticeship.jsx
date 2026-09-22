@@ -7,6 +7,7 @@ import {
 } from 'lucide-react'
 import { contactInfo } from '../data/contactData'
 import { openWhatsApp } from '../utils/openWhatsApp'
+import { useDocumentTitle } from '../hooks/useDocumentTitle'
 
 const Apprenticeship = () => {
   const [formData, setFormData] = useState({
@@ -93,11 +94,14 @@ const Apprenticeship = () => {
     }
   ]
 
+  // calling document title
+  useDocumentTitle('Apprenticeship Program')
+
   return (
     <div className="container mx-auto px-4 py-16">
       {/* Page Header */}
       <div className="text-center max-w-3xl mx-auto mb-12">
-        <span className="text-gold font-medium text-sm tracking-wider uppercase">
+        <span className="text-gold-text font-medium text-sm tracking-wider uppercase">
           Apprenticeship Program
         </span>
         <h1 className="text-4xl md:text-5xl font-serif text-dark mt-2 mb-4">

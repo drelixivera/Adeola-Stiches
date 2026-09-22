@@ -2,6 +2,7 @@
 
 @theme {
   --color-gold: #C9A84C;
+  --color-gold-text: #9B7826; /* accessible gold for text on light backgrounds (WCAG AA) */
   --color-cream: #FDF8F0;
   --color-dark: #2C2C2C;
   --color-terracotta: #D4765A;

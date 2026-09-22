@@ -61,6 +61,9 @@ const SearchResults = () => {
     apprenticeship: 'bg-gold/30 text-gold',
   }
 
+  // calling the document title
+  
+
   return (
     <div className="container mx-auto px-4 py-16">
       {/* Search Header */}
@@ -72,11 +75,11 @@ const SearchResults = () => {
           </h1>
         </div>
         <p className="text-dark/60">
-          Found <span className="font-medium text-gold">{results.length}</span> result{results.length !== 1 ? 's' : ''} 
+          Found <span className="font-medium text-gold-text">{results.length}</span> result{results.length !== 1 ? 's' : ''} 
           for "<span className="font-medium text-dark">{query}</span>"
           <Link 
             to="/" 
-            className="ml-4 text-sm text-gold hover:text-terracotta transition-colors inline-flex items-center gap-1"
+            className="ml-4 text-sm text-gold-text hover:text-terracotta transition-colors inline-flex items-center gap-1"
           >
             <XCircle size={14} />
             Clear search
@@ -96,11 +99,11 @@ const SearchResults = () => {
             or browse our categories below.
           </p>
           <div className="flex flex-wrap justify-center gap-2 mt-6">
-            <Link to="/gallery" className="text-sm text-gold hover:underline">Gallery</Link>
+            <Link to="/gallery" className="text-sm text-gold-text hover:underline">Gallery</Link>
             <span className="text-dark/20">•</span>
-            <Link to="/services" className="text-sm text-gold hover:underline">Services</Link>
+            <Link to="/services" className="text-sm text-gold-text hover:underline">Services</Link>
             <span className="text-dark/20">•</span>
-            <Link to="/testimonials" className="text-sm text-gold hover:underline">Testimonials</Link>
+            <Link to="/testimonials" className="text-sm text-gold-text hover:underline">Testimonials</Link>
           </div>
         </div>
       ) : (
@@ -191,13 +194,13 @@ const SearchResults = () => {
           <p className="text-sm text-dark/50">
             Can't find what you're looking for? 
             <span className="hidden sm:inline"> </span>
-            <Link to="/contact" className="text-gold hover:underline">
+            <Link to="/contact" className="text-gold-text hover:underline">
               Contact Adeola directly
             </Link>
           </p>
           <Link 
             to="/" 
-            className="text-sm text-gold/60 hover:text-gold transition-colors flex items-center gap-1"
+            className="text-sm text-gold-text/60 hover:text-gold transition-colors flex items-center gap-1"
           >
             <span>← Back to home</span>
           </Link>
