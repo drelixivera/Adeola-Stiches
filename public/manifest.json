@@ -1,0 +1,19 @@
+{
+  "name": "Adeola Fashion Designer",
+  "short_name": "Adeola stitches",
+  "description": "Bespoke Nigerian fashion designer in Ibadan. Aso Ebi, bridal couture, corporate tailoring, and apprenticeship.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#FDF8F0",
+  "theme_color": "#C9A84C",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
