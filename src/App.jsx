@@ -17,7 +17,7 @@ const NotFound = lazy(() => import('./pages/NotFound'))
 
 // Luxury branded loader shown while a route chunk is loading
 const LuxuryLoader = () => (
-  <div className="min-h-[60vh] flex flex-col items-center justify-center gap-4">
+  <div className="min-h-[60vh] flex flex-col items-center justify-center gap-4" style={{ margin: '120px'}}>
     <div className="relative">
       {/* Outer gold ring */}
       <div className="w-16 h-16 rounded-full border-4 border-gold/20 border-t-gold animate-spin" />
@@ -44,7 +44,7 @@ const LuxuryLoader = () => (
       </div>
     </div>
     <p className="text-xs font-serif text-gold/70 tracking-widest uppercase">
-      Loading
+      Loading...
     </p>
   </div>
 )
@@ -54,8 +54,8 @@ function App() {
     <BrowserRouter>
       <ModalProvider>
         <ScrollToTop />
-        <Layout>
-          <Suspense fallback={<LuxuryLoader />}>
+        <Suspense fallback={<LuxuryLoader />}>
+          <Layout>
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/about" element={<About />} />
@@ -67,8 +67,8 @@ function App() {
               <Route path="/search" element={<SearchResults />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
-          </Suspense>
-        </Layout>
+          </Layout>
+        </Suspense>
       </ModalProvider>
     </BrowserRouter>
   )
