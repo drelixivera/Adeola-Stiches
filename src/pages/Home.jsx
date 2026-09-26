@@ -144,7 +144,7 @@ useEffect(() => {
             className="max-w-4xl mx-auto text-center"
           >
             <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm text-white px-4 py-1.5 rounded-full text-sm font-medium mb-6 border border-white/20">
-              <Sparkles size={16} aria-hidden="true" />
+              <Award size={16} aria-hidden="true" />
               <span>Nigerian Fashion Designer</span>
             </div>
 
